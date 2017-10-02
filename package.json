@@ -1,25 +1,45 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
-  "license": "",
-  "engines": {
-    "node": ">=6.4.0"
-  },
+  "name": "mvp-project",
+  "version": "1.0.0",
+  "description": "Allows users to search for nearby restaurants, and provides related Instagram images of that location. If the food is pretty enough, the reader will go eat there! ",
+  "main": "./server/index.js",
   "scripts": {
+    "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylertruong/hrsf81-mvp.git"
+  },
+  "keywords": [
+    "mvp"
+  ],
+  "author": "Tyler Truong",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/tylertruong/hrsf81-mvp/issues"
+  },
+  "homepage": "https://github.com/tylertruong/hrsf81-mvp#readme",
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "webpack": "^2.2.1"
   },
   "dependencies": {
-  },
-  "devDependencies": {
-    "babel-cli": "^6.7.5",
-    "babel-preset-es2015": "^6.6.0",
-    "babel-register": "^6.7.2",
+    "mysql": "^2.13.0",
+    "body-parser": "^1.17.0",
+    "express": "^4.15.0",
+    "jquery": "^3.1.1",
+    "mapbox-gl": "^0.40.1",
+    "mongoose": "^4.11.12",
+    "package.json": "^2.0.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "request": "^2.81.0",
+    "semantic-ui-react": "^0.74.2",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
   }
 }
