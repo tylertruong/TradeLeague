@@ -3,13 +3,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('../db/index');
 const mysql = require('mysql');
-
+const fetcher = require('./apiFetcher.js');
 let app = express();
- 
+
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.get('/api', (req, res) => {//TODO put in res.end/redirect
+  fetcher.fetchAll('MSFT').then(function(data){//data contains api request info, TODO replace 'MSFT' with perspective stocks
+
+    console.log(data);
+  })
+})
 
 app.get('/stocks', (req, res) => {
   console.log(req.query.term);
@@ -20,12 +26,13 @@ app.get('/stocks', (req, res) => {
     db.query(queryString, (err, results) => {
       res.status(200).send(results);
     });
-  
+
   }
 
 });
 
 app.post('/stocks', (req, res) => {
+  console.log('req.body: ', req.body);
   const {stocks} = req.body;
   console.log(stocks);
 
@@ -50,7 +57,7 @@ app.post('/stocks', (req, res) => {
       console.log('they all posted');
       res.status(200).send(stocks);
     });
-  
+
 });
 
 const PORT = 3000;
