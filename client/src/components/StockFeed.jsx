@@ -12,14 +12,10 @@ class StockFeed extends React.Component {
 
   render () {
     return (
-      <Grid columns={3} divided>
-        <Grid.Row stretched>
-          <Grid.Column>
-            {this.props.stocks.map(stock => {
-              return <StockFeedEntry key={stock.name} onStockFeedClick={this.props.onStockFeedClick} stock={stock} />;
-            })}
-          </Grid.Column>
-        </Grid.Row>
+      <Grid centered>
+        {this.props.stocks.map(stock => {
+          return <StockFeedEntry key={stock.name} onStockFeedClick={this.props.onStockFeedClick} stock={stock} />;
+        })}   
       </Grid>
     );
   }
