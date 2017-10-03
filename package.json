@@ -1,7 +1,7 @@
 {
-  "name": "mvp-project",
+  "name": "trade-league",
   "version": "1.0.0",
-  "description": "Allows users to search for nearby restaurants, and provides related Instagram images of that location. If the food is pretty enough, the reader will go eat there! ",
+  "description": "Stock game for simulating real market effects in day trading. ",
   "main": "./server/index.js",
   "scripts": {
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
@@ -10,17 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tylertruong/hrsf81-mvp.git"
+    "url": "git+https://github.com/TradeLeague/TradeLeague.git"
   },
   "keywords": [
-    "mvp"
+    "trade"
   ],
-  "author": "Tyler Truong",
+  "author": "Andrew Rossman, Enrique Hernandez, Jack Qiu, Tyler Truong",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/tylertruong/hrsf81-mvp/issues"
+    "url": "https://github.com/TradeLeague/TradeLeague/issues"
   },
-  "homepage": "https://github.com/tylertruong/hrsf81-mvp#readme",
+  "homepage": "https://github.com/TradeLeague/TradeLeague#readme",
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
@@ -35,9 +35,6 @@
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "express": "^4.15.0",
     "jquery": "^3.1.1",
-    "mapbox-gl": "^0.40.1",
-    "mongoose": "^4.11.12",
-    "mysql": "^2.13.0",
     "package.json": "^2.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
