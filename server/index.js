@@ -19,10 +19,10 @@ const dummyStocks = [
   {name: 'Coca-cola', ticker: 'KO'},
   {name: 'Nike', ticker: 'NKE'},
   {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
-  {name: 'Alphabet', ticker: 'GOOG'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
   // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
@@ -34,6 +34,8 @@ const dummyStocks = [
   // {name: '3M', ticker: 'MMM'},
   // {name: 'Comcast', ticker: 'CCV'}
 ];
+
+let currentStocks = [];
 
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
@@ -58,7 +60,12 @@ app.get('/stocks', (req, res) => { //TODO put in res.end/redirect
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
-      res.status(200).send(stocks);
+      currentStocks = stocks;
+      res.status(200).send(currentStocks);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(200).send(currentStocks);
     });
 
 });
