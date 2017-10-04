@@ -35,7 +35,11 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^0.16.2",
+=======
+    "bluebird": "^3.5.0",
+>>>>>>> mvp server endpointss
     "body-parser": "^1.17.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "express": "^4.15.0",
@@ -46,8 +50,13 @@
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+<<<<<<< HEAD
     "request": "^2.81.0",
     "semantic-ui-react": "^0.74.2",
     "victory": "^0.23.0"
+=======
+    "request": "^2.83.0",
+    "semantic-ui-react": "^0.74.2"
+>>>>>>> mvp server endpointss
   }
 }

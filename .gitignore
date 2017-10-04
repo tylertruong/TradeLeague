@@ -1,5 +1,6 @@
 ### node etc ###
 
+
 # Logs
 logs
 *.log
@@ -20,7 +21,10 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
+<<<<<<< HEAD
 dist/
+=======
+>>>>>>> mvp server endpointss
 client/dist/bundle.js
 
 # Dependency directorys

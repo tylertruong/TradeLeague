@@ -4,6 +4,9 @@ const path = require('path');
 const db = require('../db/index');
 const mysql = require('mysql');
 const fetcher = require('./apiFetcher.js');
+var request = require('request');
+
+
 let app = express();
 
 
@@ -68,6 +71,7 @@ app.get('/stocks', (req, res) => { //TODO put in res.end/redirect
       res.status(200).send(currentStocks);
     });
 
+
 });
 
 app.get('/temp', (req, res) => {
@@ -82,7 +86,12 @@ app.get('/temp', (req, res) => {
 
   }
 
+
+app.get('stock/send-all', (req, res) => {
+  var data = JSON.stringify(arrayOfStocks);
+  res.end(data);
 });
+
 
 app.post('/stocks', (req, res) => {
   console.log('req.body: ', req.body);
@@ -102,7 +111,30 @@ app.post('/stocks', (req, res) => {
         }
       });
     });
+
+app.get('portfolio/send-all', (req, res) => {
+  db.getPortfolio()
+  .then((data) => {
+    res.end(data);
+  })
+  .catch(function(e) {
+    throw new Error(res.json(e));
+
   });
+});
+
+app.post('stock/buy', (req, res) => {
+  var stock = req.body;
+  //this is assuming the query functions are in the db/index.js file
+  db.saveStock(stock)
+  .then((data) => {
+    res.end(data);
+  })
+  .catch(function(e) {
+    throw new Error(res.json(e));
+  });
+});
+
 
   Promise.all(pStocks)
     .then((data) => {
@@ -110,7 +142,30 @@ app.post('/stocks', (req, res) => {
       res.status(200).send(stocks);
     });
 
+
+app.patch('stock/sell/:stock', (req, res) => {
+  var stockName = req.params.stock;
+  //this is assuming the client is sending an object with a key 'price' and value = price at the point of sale
+  var stockSalePrice = req.body.price;
+  //this is assuming the client is sending an object with a key 'time' and value = time at the point of sale
+  var stockSaleTime = req.body.time;
+  var obj = {
+    name: stockName,
+    salePrice: stockSalePrice,
+    saleTime: stockSaleTime
+  };
+  
+  db.sellStock(obj)
+  .then((data) => {
+    res.end();
+  })
+  .catch(function(e) {
+    throw new Error(res.json(e));
+  })
 });
+
+
+
 
 const PORT = 3000;
 
