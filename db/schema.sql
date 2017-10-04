@@ -24,3 +24,4 @@ CREATE TABLE positions (
   net_gain DECIMAL(10, 4) NOT NULL,
   PRIMARY KEY(trader, symbol)
 );
+
