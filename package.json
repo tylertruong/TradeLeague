@@ -30,6 +30,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.17.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "express": "^4.15.0",
