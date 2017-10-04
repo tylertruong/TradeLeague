@@ -5,6 +5,10 @@ import StockFeed from './components/StockFeed.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import {Divider} from 'semantic-ui-react';
 import $ from 'jquery';
+import Chart from './components/Chart.jsx';
+import Summary from './components/Summary.jsx';
+
+
 
  
 class App extends React.Component {
@@ -14,6 +18,9 @@ class App extends React.Component {
       myStocks: [],
       allStocks: []
     };
+  }
+
+  componentDidMount() {
     this.fetch();
   }
 
@@ -87,7 +94,9 @@ class App extends React.Component {
   render () {
     return (
       <div>
+        <Summary />
         <SearchBar searchStocks={this.searchStocks} />
+        <Chart /> 
         <StockList stocks={this.state.myStocks} onStockListClick={this.onStockListClick.bind(this)} />
         <Divider />
         <StockFeed stocks={this.state.allStocks} onStockFeedClick={this.onStockFeedClick.bind(this)} />
