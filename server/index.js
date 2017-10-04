@@ -19,12 +19,12 @@ const dummyStocks = [
   {name: 'AT&T', ticker: 'T'},
   {name: 'Twitter', ticker: 'TWTR'},
   {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-cola', ticker: 'KO'},
+  {name: 'Coca-Cola', ticker: 'KO'},
   {name: 'Nike', ticker: 'NKE'},
   {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  // {name: 'Morgan Stanley', ticker: 'MS'},
-  // {name: 'Exxon Mobil', ticker: 'XOM'},
-  // {name: 'Apple', ticker: 'AAPL'},
+  {name: 'Morgan Stanley', ticker: 'MS'},
+  {name: 'Exxon Mobil', ticker: 'XOM'},
+  {name: 'Apple', ticker: 'AAPL'},
   // {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/stocks', (req, res) => { //TODO put in res.end/redirect
+app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
 
   let dStocks = dummyStocks.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
@@ -70,100 +70,56 @@ app.get('/stocks', (req, res) => { //TODO put in res.end/redirect
       console.log(err);
       res.status(200).send(currentStocks);
     });
-
-
 });
 
-app.get('/temp', (req, res) => {
-  console.log(req.query.term);
-  if (req.query.term) {
-    res.status(200).send(stocks);
-  } else {
-    let queryString = 'SELECT * from stocks';
-    db.query(queryString, (err, results) => {
-      res.status(200).send(results);
-    });
-
-  }
-
-
-app.get('stock/send-all', (req, res) => {
-  var data = JSON.stringify(arrayOfStocks);
-  res.end(data);
-});
-
-
-app.post('/stocks', (req, res) => {
-  console.log('req.body: ', req.body);
-  const {stocks} = req.body;
-
-  let pStocks = stocks.map(stock => {
-
-    return new Promise ((resolve, reject) => {
-      let queryString = `INSERT INTO stocks (id, name, find, price) VALUES (${stock.id},${mysql.escape(stock.name)}, ${stock.find}, ${stock.price});`;
-      console.log(queryString);
-      db.query(queryString, (err, results) => {
-        if (err) {
-          console.log(err);
-          reject (err);
-        } else {
-          resolve(results);
-        }
-      });
-    });
 
 app.get('portfolio/send-all', (req, res) => {
   db.getPortfolio()
-  .then((data) => {
-    res.end(data);
-  })
-  .catch(function(e) {
-    throw new Error(res.json(e));
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      throw new Error(res.json(e));
+    });
 
-  });
 });
 
 app.post('stock/buy', (req, res) => {
-  var stock = req.body;
-  //this is assuming the query functions are in the db/index.js file
-  db.saveStock(stock)
-  .then((data) => {
-    res.end(data);
-  })
-  .catch(function(e) {
-    throw new Error(res.json(e));
-  });
+  const {stock} = req.body;
+
+  let obj = {
+    symbol: stock.symbol,
+    close: stock.series[stock.refresh]['4. close'],
+    refresh: stock.refresh,
+  };
+
+  db.saveStock(obj)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((e) => {
+      throw new Error(res.json(e));
+    });
 });
 
 
-  Promise.all(pStocks)
-    .then((data) => {
-      console.log('they all posted');
-      res.status(200).send(stocks);
-    });
+app.post('stock/sell', (req, res) => {
+  const {stock} = req.body;
 
-
-app.patch('stock/sell/:stock', (req, res) => {
-  var stockName = req.params.stock;
-  //this is assuming the client is sending an object with a key 'price' and value = price at the point of sale
-  var stockSalePrice = req.body.price;
-  //this is assuming the client is sending an object with a key 'time' and value = time at the point of sale
-  var stockSaleTime = req.body.time;
-  var obj = {
-    name: stockName,
-    salePrice: stockSalePrice,
-    saleTime: stockSaleTime
+  let obj = {
+    symbol: stock.name,
+    close: stock.series[stock.refresh]['4. close'],
+    refresh: stock.refresh,
   };
   
   db.sellStock(obj)
-  .then((data) => {
-    res.end();
-  })
-  .catch(function(e) {
-    throw new Error(res.json(e));
-  })
+    .then((data) => {
+      res.send();
+    })
+    .catch((e) => {
+      throw new Error(res.json(e));
+    });
 });
-
 
 
 

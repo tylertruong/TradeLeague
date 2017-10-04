@@ -10,11 +10,11 @@ class StockFeed extends React.Component {
     };
   }
 
-  render () {
+  render() {
     return (
       <Grid centered>
         {this.props.stocks.map(stock => {
-          return <StockEntry key={stock.name} onTitleClick={this.props.onTitleClick} onStockClick={this.props.onStockFeedClick} stock={stock} />;
+          return <StockEntry key={stock.name} onTitleClick={this.props.onTitleClick} onStockClick={this.props.onStockClick} stock={stock} />;
         })}   
       </Grid>
     );
