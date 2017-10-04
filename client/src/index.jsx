@@ -26,7 +26,7 @@ class App extends React.Component {
   fetch() {
     $.ajax({
       method: 'GET',
-      url: '/stocks',
+      url: '/stock/send-all',
       success: (data) => {
         this.setState({
           allStocks: data,
@@ -36,13 +36,15 @@ class App extends React.Component {
     });
   }
   
-  sendCurrentStocks() {
+  getPortfolio() {
     $.ajax({
-      method: 'POST',
-      url: '/stocks',
-      data: {stocks: this.state.myStocks},
+      method: 'GET',
+      url: '/portfolio/send-all',
       success: (data) => {
-        console.log('made it!');
+        console.log(data);
+        // this.setState({
+        //   myStocks: value
+        // });
       },
       error: (data) => {
         console.log(data);
@@ -56,32 +58,57 @@ class App extends React.Component {
     });
   }
 
-  onStockFeedClick(value) {
-    let myStocks = this.state.myStocks.slice();
-    myStocks.push(value);
+  buyStock(value) {
+    // let myStocks = this.state.myStocks.slice();
+    // myStocks.push(value);
    
-    let allStocks = this.state.allStocks.slice();
-    for (let i = 0; i < allStocks.length; i++) {
-      if (allStocks[i].name === value.name) {
-        allStocks.splice(i, 1);
-      }
-    }
+    // let allStocks = this.state.allStocks.slice();
+    // for (let i = 0; i < allStocks.length; i++) {
+    //   if (allStocks[i].name === value.name) {
+    //     allStocks.splice(i, 1);
+    //   }
+    // }
 
-    this.setState({
-      myStocks: myStocks,
-      allStocks: allStocks
+    // this.setState({
+    //   myStocks: myStocks,
+    //   allStocks: allStocks
+    // });
+
+    $.ajax({
+      method: 'POST',
+      url: '/stock/buy',
+      data: {stock: value},
+      success: (data) => {
+        console.log('bought!');
+      },
+      error: (data) => {
+        console.log(data);
+      }
     });
+
   }
 
-  onStockListClick(value) {
-    let myStocks = this.state.myStocks.slice();
-    for (let i = 0; i < myStocks.length; i++) {
-      if (myStocks[i].name === value.name) {
-        myStocks.splice(i, 1);
+  sellStock(value) {
+    // let myStocks = this.state.myStocks.slice();
+    // for (let i = 0; i < myStocks.length; i++) {
+    //   if (myStocks[i].name === value.name) {
+    //     myStocks.splice(i, 1);
+    //   }
+    // }
+    // this.setState({
+    //   myStocks: myStocks
+    // });
+
+    $.ajax({
+      method: 'POST',
+      url: '/stock/sell',
+      data: {stock: value},
+      success: (data) => {
+        console.log('sell!');
+      },
+      error: (data) => {
+        console.log(data);
       }
-    }
-    this.setState({
-      myStocks: myStocks
     });
   }
 
@@ -101,9 +128,9 @@ class App extends React.Component {
       <div>
         <SearchBar searchStocks={this.searchStocks} />
         <Chart stock={this.state.currentStock} /> 
-        <StockList stocks={this.state.myStocks} onTitleClick={this.onTitleClick.bind(this)} onStockListClick={this.onStockListClick.bind(this)} />
+        <StockList stocks={this.state.myStocks} onTitleClick={this.onTitleClick.bind(this)} onStockClick={this.sellStock.bind(this)} />
         <Divider />
-        <StockFeed stocks={this.state.allStocks} onTitleClick={this.onTitleClick.bind(this)} onStockFeedClick={this.onStockFeedClick.bind(this)} />
+        <StockFeed stocks={this.state.allStocks} onTitleClick={this.onTitleClick.bind(this)} onStockClick={this.buyStock.bind(this)} />
         <Summary />
 
       </div>

@@ -14,7 +14,7 @@ let StockEntry = (props) => {
         Last Refreshed: {props.stock.refresh} <br></br>
         <StockChart stock={props.stock} /><br></br>
         <div style={{float: 'right'}}>
-          <Icon name='checkmark' size='large' onClick={() => props.onStockClick(props.stock)} /> <Icon name='remove' size='large' />
+          <Icon name='checkmark' size='large' onClick={() => props.onStockClick(props.stock)} /> 
         </div>
         <br></br>
       </Segment>
@@ -28,4 +28,5 @@ export default StockEntry;
         Open: {props.stock[props.stock.refresh]['1. open']} <br></br>
         Close: {props.stock[props.stock.refresh]['4. close']} <br></br>
         Volume: {props.stock[props.stock.refresh]['5. volume']} <br></br>
+        <Icon name='remove' size='large' />
 */
