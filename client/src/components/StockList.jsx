@@ -1,7 +1,6 @@
 import React from 'react';
-import StockListEntry from './StockListEntry.jsx';
+import StockEntry from './StockEntry.jsx';
 import {Grid} from 'semantic-ui-react';
-import Summary from './Summary.jsx';
 
 class StockList extends React.Component {
   constructor(props) {
@@ -14,9 +13,8 @@ class StockList extends React.Component {
   render() {
     return (
       <Grid centered>
-        <Summary />
         {this.props.stocks.map(stock => {
-          return <StockListEntry key={stock.name} onStockListClick={this.props.onStockListClick} stock={stock} />;
+          return <StockEntry key={stock.name} onTitleClick={this.props.onTitleClick} onStockClick={this.props.onStockListClick} stock={stock} />;
         })}
       </Grid>
     );

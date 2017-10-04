@@ -6,18 +6,64 @@ const mysql = require('mysql');
 const fetcher = require('./apiFetcher.js');
 let app = express();
 
+
+const dummyStocks = [
+  {name: 'Ford Motor', ticker: 'F'},
+  {name: 'General Electric', ticker: 'GE'},
+  {name: 'Delta Air Lines', ticker: 'DAL'},
+  {name: 'Snap', ticker: 'SNAP'},
+  {name: 'Bank of America', ticker: 'BAC'},
+  {name: 'AT&T', ticker: 'T'},
+  {name: 'Twitter', ticker: 'TWTR'},
+  {name: 'Pfizer', ticker: 'PFE'},
+  {name: 'Coca-cola', ticker: 'KO'},
+  {name: 'Nike', ticker: 'NKE'},
+  {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  {name: 'Morgan Stanley', ticker: 'MS'},
+  {name: 'Exxon Mobil', ticker: 'XOM'},
+  {name: 'Apple', ticker: 'AAPL'},
+  {name: 'Alphabet', ticker: 'GOOG'},
+  // {name: 'Microsoft', ticker: 'MSFT'},
+  // {name: 'Amazon', ticker: 'AMZN'},
+  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  // {name: 'FaceBook', ticker: 'FB'},
+  // {name: 'Visa', ticker: 'V'},
+  // {name: 'Walt Disney', ticker: 'DIS'},
+  // {name: 'McDonalds', ticker: 'MCD'},
+  // {name: '3M', ticker: 'MMM'},
+  // {name: 'Comcast', ticker: 'CCV'}
+];
+
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api', (req, res) => {//TODO put in res.end/redirect
-  fetcher.fetchAll('MSFT').then(function(data){//data contains api request info, TODO replace 'MSFT' with perspective stocks
+app.get('/stocks', (req, res) => { //TODO put in res.end/redirect
 
-    console.log(data);
-  })
-})
+  let dStocks = dummyStocks.map(stock => {
+    return fetcher.fetchAll(stock.ticker).then(data => { 
+      return {data: data.data, name: stock.name};
+    });
+  });
 
-app.get('/stocks', (req, res) => {
+  Promise.all(dStocks)
+    .then((data) => {
+      let stocks = data.map(stock => {
+        const {data, name} = stock;
+        const metadata = data['Meta Data'];
+        const timeSeries = data['Time Series (1min)'];
+        const symbol = metadata['2. Symbol'];
+        const refresh = metadata['3. Last Refreshed'];
+
+        return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
+      }); 
+      res.status(200).send(stocks);
+    });
+
+});
+
+app.get('/temp', (req, res) => {
   console.log(req.query.term);
   if (req.query.term) {
     res.status(200).send(stocks);
@@ -34,7 +80,6 @@ app.get('/stocks', (req, res) => {
 app.post('/stocks', (req, res) => {
   console.log('req.body: ', req.body);
   const {stocks} = req.body;
-  console.log(stocks);
 
   let pStocks = stocks.map(stock => {
 

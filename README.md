@@ -1,13 +1,13 @@
-# Project Name
+# Trade League
 
-> Pithy project description
+> Stock game for simulating real market effects in day trading.
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Andrew Rossman
+  - Enrique Hernandez
+  - Jack Qiu
+  - Tyler Truong
 
 ## Table of Contents
 
@@ -25,11 +25,15 @@
 
 ## Requirements
 
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Body Parser 1.17.0
+- Express 4.15.0
+- Jquery 3.1.1
+- React 15.4.2
+- React DOM 15.4.2
+- React Redux 5.0.6
+- Redux 3.7.2
+- Request 2.81.0
+- Semantic UI React 0.74.2
 
 ## Development
 
