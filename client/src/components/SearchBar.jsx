@@ -20,7 +20,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div style={{margin: '10px'}}>
-        <Input style={{width: '600px'}} onChange={this.searchTerm.bind(this)}></Input>
+        <Input style={{width: '600px', marginRight: '1px'}} onChange={this.searchTerm.bind(this)}></Input>
         <Button onClick={() => this.props.searchStocks(this.state.term)}>Search</Button>
       </div>
     );

@@ -9,14 +9,13 @@ import Chart from './components/Chart.jsx';
 import Summary from './components/Summary.jsx';
 
 
-
- 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       myStocks: [],
-      allStocks: []
+      allStocks: [],
+      currentStock: {}
     };
   }
 
@@ -29,9 +28,9 @@ class App extends React.Component {
       method: 'GET',
       url: '/stocks',
       success: (data) => {
-        console.log(data);
         this.setState({
-          allStocks: data
+          allStocks: data,
+          currentStock: data[0]
         });
       }
     });
@@ -48,6 +47,12 @@ class App extends React.Component {
       error: (data) => {
         console.log(data);
       }
+    });
+  }
+
+  onTitleClick(value) {
+    this.setState({
+      currentStock: value
     });
   }
 
@@ -94,12 +99,13 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <Summary />
         <SearchBar searchStocks={this.searchStocks} />
-        <Chart /> 
-        <StockList stocks={this.state.myStocks} onStockListClick={this.onStockListClick.bind(this)} />
+        <Chart stock={this.state.currentStock} /> 
+        <StockList stocks={this.state.myStocks} onTitleClick={this.onTitleClick.bind(this)} onStockListClick={this.onStockListClick.bind(this)} />
         <Divider />
-        <StockFeed stocks={this.state.allStocks} onStockFeedClick={this.onStockFeedClick.bind(this)} />
+        <StockFeed stocks={this.state.allStocks} onTitleClick={this.onTitleClick.bind(this)} onStockFeedClick={this.onStockFeedClick.bind(this)} />
+        <Summary />
+
       </div>
     );
   }

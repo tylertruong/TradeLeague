@@ -14,7 +14,7 @@ class StockFeed extends React.Component {
     return (
       <Grid centered>
         {this.props.stocks.map(stock => {
-          return <StockEntry key={stock.name} onStockFeedClick={this.props.onStockFeedClick} stock={stock} />;
+          return <StockEntry key={stock.name} onTitleClick={this.props.onTitleClick} onStockClick={this.props.onStockFeedClick} stock={stock} />;
         })}   
       </Grid>
     );

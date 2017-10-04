@@ -18,77 +18,80 @@ class Chart extends React.Component {
   }
 
   render() {
-    const chartStyle = { parent: {minWidth: '100%'}};
-    return (
-      <div>
-        <VictoryChart width={1000} height={400} scale={{x: 'time'}} style={chartStyle}
-          containerComponent={
-            <VictoryZoomContainer responsive={false}
-              dimension="x"
-              zoomDomain={this.state.zoomDomain}
-              onDomainChange={this.handleZoom.bind(this)}
-            />
-          }
-        >
-          <VictoryLine
-            style={{
-              data: {stroke: 'tomato'}
-            }}
-            data={[
-              {x: new Date(1982, 1, 1), y: 125},
-              {x: new Date(1987, 1, 1), y: 257},
-              {x: new Date(1993, 1, 1), y: 345},
-              {x: new Date(1997, 1, 1), y: 515},
-              {x: new Date(2001, 1, 1), y: 132},
-              {x: new Date(2005, 1, 1), y: 305},
-              {x: new Date(2011, 1, 1), y: 270},
-              {x: new Date(2015, 1, 1), y: 470}
-            ]}
-          />
+    if (this.props.stock.series) {
+      const chartStyle = { parent: {minWidth: '100%', marginLeft: '5%'}};
+      let stockKeys = Object.keys(this.props.stock.series);
 
-        </VictoryChart>
-
-        <VictoryChart
-          padding={{top: 0, left: 50, right: 50, bottom: 30}}
-          width={1000} height={100} scale={{x: 'time'}} style={chartStyle}
-          containerComponent={
-            <VictoryBrushContainer responsive={false}
-              dimension='x'
-              selectedDomain={this.state.selectedDomain}
-              onDomainChange={this.handleBrush.bind(this)}
+      return (
+        <div>
+          <VictoryChart width={1000} height={450} scale={{x: 'time'}} style={chartStyle}
+            containerComponent={
+              <VictoryZoomContainer responsive={false}
+                dimension="x"
+                zoomDomain={this.state.zoomDomain}
+                onDomainChange={this.handleZoom.bind(this)}
+              />
+            }
+          >
+            <VictoryLine
+              style={{
+                data: {stroke: 'tomato'}
+              }}
+              data={
+                stockKeys.map(key => {
+                  return {x: new Date(key), y: this.props.stock.series[key]['4. close'] };
+                })
+              }
             />
-          }
-        >
-          <VictoryAxis
-            tickValues={[
-              new Date(1985, 1, 1),
-              new Date(1990, 1, 1),
-              new Date(1995, 1, 1),
-              new Date(2000, 1, 1),
-              new Date(2005, 1, 1),
-              new Date(2010, 1, 1)
-            ]}
-            tickFormat={(x) => new Date(x).getFullYear()}
-          />
-          <VictoryLine
-            style={{
-              data: {stroke: 'tomato'}
-            }}
-            data={[
-              {x: new Date(1982, 1, 1), y: 125},
-              {x: new Date(1987, 1, 1), y: 257},
-              {x: new Date(1993, 1, 1), y: 345},
-              {x: new Date(1997, 1, 1), y: 515},
-              {x: new Date(2001, 1, 1), y: 132},
-              {x: new Date(2005, 1, 1), y: 305},
-              {x: new Date(2011, 1, 1), y: 270},
-              {x: new Date(2015, 1, 1), y: 470}
-            ]}
-          />
-        </VictoryChart>
-      </div>
-    );
+
+          </VictoryChart>
+
+       
+        </div>
+      );
+    } else {
+      return (
+        <div>
+        </div>
+      );
+    }
   }
 }
 
 export default Chart;
+
+/*
+
+   <VictoryChart
+            padding={{top: 0, left: 50, right: 50, bottom: 30}}
+            width={1000} height={100} scale={{x: 'time'}} style={chartStyle}
+            containerComponent={
+              <VictoryBrushContainer responsive={false}
+                dimension='x'
+                selectedDomain={this.state.selectedDomain}
+                onDomainChange={this.handleBrush.bind(this)}
+              />
+            }
+          >
+            <VictoryAxis
+              tickValues={
+                stockKeys.map(key => {
+                  return new Date(key);
+                })
+              }
+              tickFormat={(x) => new Date(x).getFullYear()}
+            />
+            <VictoryLine
+              style={{
+                data: {stroke: 'tomato'}
+              }}
+              data={
+                stockKeys.map(key => {
+                  return {x: new Date(key), y: this.props.stock.series[key]['4. close'] };
+                })
+              }
+            />
+          </VictoryChart>
+
+
+          */
