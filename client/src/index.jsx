@@ -21,6 +21,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetch();
+    setInterval(this.fetch, 30000);
   }
 
   fetch() {
