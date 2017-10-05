@@ -18,9 +18,9 @@ const dummyStocks = [
   {name: 'Bank of America', ticker: 'BAC'},
   {name: 'AT&T', ticker: 'T'},
   {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'}
-  // {name: 'Coca-Cola', ticker: 'KO'},
-  // {name: 'Nike', ticker: 'NKE'},
+  {name: 'Pfizer', ticker: 'PFE'},
+  {name: 'Coca-Cola', ticker: 'KO'},
+  {name: 'Nike', ticker: 'NKE'},
   // {name: 'Wal-Mart Stores', ticker: 'WMT'},
   // {name: 'Morgan Stanley', ticker: 'MS'},
   // {name: 'Exxon Mobil', ticker: 'XOM'},
@@ -81,8 +81,6 @@ const cronJob = (stocks) => {
       } else {
         secondHalf = stocks;
       }
-      // currentStocks = stocks;
-      console.log('CURRENT STOCKS!!!!!!', firstHalf.concat(secondHalf));
     })
     .catch((err) => {
       console.log(err);
