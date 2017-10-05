@@ -21,6 +21,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetch();
+    this.getPortfolio();
   }
 
   fetch() {
@@ -59,20 +60,6 @@ class App extends React.Component {
   }
 
   buyStock(value) {
-    // let myStocks = this.state.myStocks.slice();
-    // myStocks.push(value);
-   
-    // let allStocks = this.state.allStocks.slice();
-    // for (let i = 0; i < allStocks.length; i++) {
-    //   if (allStocks[i].name === value.name) {
-    //     allStocks.splice(i, 1);
-    //   }
-    // }
-
-    // this.setState({
-    //   myStocks: myStocks,
-    //   allStocks: allStocks
-    // });
 
     $.ajax({
       method: 'POST',
@@ -80,6 +67,7 @@ class App extends React.Component {
       data: {stock: value},
       success: (data) => {
         console.log('bought!');
+        this.getPortfolio();
       },
       error: (data) => {
         console.log(data);
@@ -89,15 +77,6 @@ class App extends React.Component {
   }
 
   sellStock(value) {
-    // let myStocks = this.state.myStocks.slice();
-    // for (let i = 0; i < myStocks.length; i++) {
-    //   if (myStocks[i].name === value.name) {
-    //     myStocks.splice(i, 1);
-    //   }
-    // }
-    // this.setState({
-    //   myStocks: myStocks
-    // });
 
     $.ajax({
       method: 'POST',
@@ -105,6 +84,7 @@ class App extends React.Component {
       data: {stock: value},
       success: (data) => {
         console.log('sell!');
+        this.getPortfolio();
       },
       error: (data) => {
         console.log(data);
