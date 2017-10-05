@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid, Segment, Header, Icon} from 'semantic-ui-react';
 import StockChart from './StockChart.jsx';
 
-let StockEntry = (props) => {
+let StockFeedEntry = (props) => {
   return (
     <Grid.Column mobile={12} tablet={6} computer={5}>
       <Segment>
@@ -22,11 +22,5 @@ let StockEntry = (props) => {
   );
 };
 
-export default StockEntry;
+export default StockFeedEntry;
 
-/*
-        Open: {props.stock[props.stock.refresh]['1. open']} <br></br>
-        Close: {props.stock[props.stock.refresh]['4. close']} <br></br>
-        Volume: {props.stock[props.stock.refresh]['5. volume']} <br></br>
-        <Icon name='remove' size='large' />
-*/

@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('../db/index');
 const mysql = require('mysql');
-const fetcher = require('./apiFetcher.js');
-var request = require('request');
+const fetcher = require('../helper/apiFetcher.js');
+const request = require('request');
 
 
 let app = express();
@@ -57,6 +57,11 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
       let stocks = data.map(stock => {
         const {data, name} = stock;
         const metadata = data['Meta Data'];
+
+        if (!metadata) {
+          throw new Error;
+        }
+
         const timeSeries = data['Time Series (1min)'];
         const symbol = metadata['2. Symbol'];
         const refresh = metadata['3. Last Refreshed'];
@@ -109,11 +114,12 @@ app.post('/stock/sell', (req, res) => {
   const {stock} = req.body;
 
   let obj = {
-    symbol: stock.name,
-    close: stock.series[stock.refresh]['4. close'],
+    symbol: stock.symbol,
+    close: stock.close,
     refresh: stock.refresh,
   };
   
+  console.log('obj', obj);
   db.sellStock(obj)
     .then((data) => {
       res.send();
