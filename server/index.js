@@ -35,13 +35,13 @@ const dummyStocks = [
   {name: 'Walt Disney', ticker: 'DIS'},
   {name: 'McDonalds', ticker: 'MCD'},
   {name: '3M', ticker: 'MMM'},
-  {name: 'Comcast', ticker: 'CCV'}
+//  {name: 'Comcast', ticker: 'CCV'}
 ];
 
 let currentStocks = [];
 let firstHalf = [];
 let secondHalf = [];
-let count = 1;
+let count = 0;
 let mid = Math.floor(dummyStocks.length / 2);
 
 app.use(express.static(path.join(__dirname, '../client/dist/')));
@@ -50,9 +50,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const cronJob = (stocks) => {
   if (count % 2 === 0) {
-    var dummyStock = dummyStocks.slice(mid);
-  } else {
     var dummyStock = dummyStocks.slice(0, mid);
+  } else {
+    var dummyStock = dummyStocks.slice(mid);
   }
   let dStocks = dummyStock.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
@@ -81,11 +81,12 @@ const cronJob = (stocks) => {
       } else {
         secondHalf = stocks;
       }
+      count++;
     })
     .catch((err) => {
       console.log(err);
     });
-  count++;
+
 };
 
 cronJob(dummyStocks);
