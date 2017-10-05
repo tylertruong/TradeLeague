@@ -44,9 +44,9 @@ app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
+const cronJob = (stocks) => {
 
-  let dStocks = dummyStocks.map(stock => {
+  let dStocks = stocks.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
       return {data: data.data, name: stock.name};
     });
@@ -69,12 +69,16 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
       currentStocks = stocks;
-      res.status(200).send(currentStocks);
     })
     .catch((err) => {
       console.log(err);
-      res.status(200).send(currentStocks);
     });
+};
+
+setInterval(() => cronJob(dummyStocks), 500);
+
+app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
+  res.status(200).send(currentStocks);
 });
 
 
