@@ -76,7 +76,7 @@ const cronJob = (stocks) => {
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
-      if (count % 2 !== 0) {
+      if (count % 2 === 0) {
         firstHalf = stocks;
       } else {
         secondHalf = stocks;
