@@ -46,9 +46,9 @@ let sellStock = (stock) => {
 	return new Promise((resolve, reject) => {
 		connection.query(eventQuery, (err, res) => {
 			if (!err) {
-				let currentPositionValue = `SELECT price FROM positions WHERE symbol = ${stock.symbol}`;
-				let positionGain = currentPositionValue[0].price - stock.close;
-				let positionsQuery = `INSERT INTO positions (trader, symbol, number_of_shares, time_of_last_event, total_cost, net_gain) VALUES ('Gordon', ${mysql.escape(stock.symbol)}, 0, ${mysql.escape(stock.refresh)}, ${stock.close}, 0) ON DUPLICATE KEY UPDATE number_of_shares = 0, time_of_last_event = ${mysql.escape(stock.refresh)}, total_cost = 0, net_gain = ${positionGain}`;
+				let currentPositionValue = `SELECT total_cost FROM positions WHERE symbol = ${mysql.escape(stock.symbol)}`;
+				let positionGain = currentPositionValue[0].total_cost - stock.close;
+				let positionsQuery = `UPDATE positions SET number_of_shares=0, time_of_last_event=${mysql.escape(stock.refresh)}, total_cost=0, net_gain=${positionGain} WHERE symbol=${mysql.escape(stock.symbol)}`;
 				connection.query(positionsQuery, (err, res) => {
           if (!err) {
             resolve(res);
