@@ -13,40 +13,46 @@ let app = express();
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
   {name: 'General Electric', ticker: 'GE'},
-  // {name: 'Delta Air Lines', ticker: 'DAL'},
-  // {name: 'Snap', ticker: 'SNAP'},
-  // {name: 'Bank of America', ticker: 'BAC'},
-  // {name: 'AT&T', ticker: 'T'},
-  // {name: 'Twitter', ticker: 'TWTR'},
-  // {name: 'Pfizer', ticker: 'PFE'},
-  // {name: 'Coca-Cola', ticker: 'KO'},
-  // {name: 'Nike', ticker: 'NKE'},
-  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  // {name: 'Morgan Stanley', ticker: 'MS'},
-  // {name: 'Exxon Mobil', ticker: 'XOM'},
-  // {name: 'Apple', ticker: 'AAPL'},
-  // {name: 'Alphabet', ticker: 'GOOG'},
-  // {name: 'Microsoft', ticker: 'MSFT'},
-  // {name: 'Amazon', ticker: 'AMZN'},
-  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
-  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
-  // {name: 'FaceBook', ticker: 'FB'},
-  // {name: 'Visa', ticker: 'V'},
-  // {name: 'Walt Disney', ticker: 'DIS'},
-  // {name: 'McDonalds', ticker: 'MCD'},
-  // {name: '3M', ticker: 'MMM'},
-  // {name: 'Comcast', ticker: 'CCV'}
+  {name: 'Delta Air Lines', ticker: 'DAL'},
+  {name: 'Snap', ticker: 'SNAP'},
+  {name: 'Bank of America', ticker: 'BAC'},
+  {name: 'AT&T', ticker: 'T'},
+  {name: 'Twitter', ticker: 'TWTR'},
+  {name: 'Pfizer', ticker: 'PFE'},
+  {name: 'Coca-Cola', ticker: 'KO'},
+  {name: 'Nike', ticker: 'NKE'},
+  {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  {name: 'Morgan Stanley', ticker: 'MS'},
+  {name: 'Exxon Mobil', ticker: 'XOM'},
+  {name: 'Apple', ticker: 'AAPL'},
+  {name: 'Alphabet', ticker: 'GOOG'},
+  {name: 'Microsoft', ticker: 'MSFT'},
+  {name: 'Amazon', ticker: 'AMZN'},
+  {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  {name: 'FaceBook', ticker: 'FB'},
+  {name: 'Visa', ticker: 'V'},
+  {name: 'Walt Disney', ticker: 'DIS'},
+  {name: 'McDonalds', ticker: 'MCD'},
+  {name: '3M', ticker: 'MMM'},
+  {name: 'Comcast', ticker: 'CCV'}
 ];
 
 let currentStocks = [];
+let count = 1;
+let mid = Math.floor(dummyStocks.length / 2);
 
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const cronJob = (stocks) => {
-
-  let dStocks = stocks.map(stock => {
+  if (count % 2 === 0) {
+    let dummyStock = dummyStocks.slice(mid);
+  } else {
+    let dummyStock = dummyStocks.slice(0, mid);
+  }
+  let dStocks = dummyStock.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
       return {data: data.data, name: stock.name};
     });
@@ -73,6 +79,7 @@ const cronJob = (stocks) => {
     .catch((err) => {
       console.log(err);
     });
+  count++;
 };
 
 setInterval(() => cronJob(dummyStocks), 500);
