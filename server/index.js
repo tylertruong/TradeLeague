@@ -13,18 +13,18 @@ let app = express();
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
   {name: 'General Electric', ticker: 'GE'},
-  {name: 'Delta Air Lines', ticker: 'DAL'},
-  {name: 'Snap', ticker: 'SNAP'},
-  {name: 'Bank of America', ticker: 'BAC'},
-  {name: 'AT&T', ticker: 'T'},
-  {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-Cola', ticker: 'KO'},
-  {name: 'Nike', ticker: 'NKE'},
-  {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Delta Air Lines', ticker: 'DAL'},
+  // {name: 'Snap', ticker: 'SNAP'},
+  // {name: 'Bank of America', ticker: 'BAC'},
+  // {name: 'AT&T', ticker: 'T'},
+  // {name: 'Twitter', ticker: 'TWTR'},
+  // {name: 'Pfizer', ticker: 'PFE'},
+  // {name: 'Coca-Cola', ticker: 'KO'},
+  // {name: 'Nike', ticker: 'NKE'},
+  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
   // {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
@@ -73,7 +73,7 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
 });
 
 
-app.get('portfolio/send-all', (req, res) => {
+app.get('/portfolio/send-all', (req, res) => {
   db.getPortfolio()
     .then((data) => {
       res.send(data);
@@ -84,7 +84,8 @@ app.get('portfolio/send-all', (req, res) => {
 
 });
 
-app.post('stock/buy', (req, res) => {
+app.post('/stock/buy', (req, res) => {
+  console.log('buying!');
   const {stock} = req.body;
 
   let obj = {
@@ -95,15 +96,16 @@ app.post('stock/buy', (req, res) => {
 
   db.saveStock(obj)
     .then((data) => {
-      res.send(data);
+      console.log('purchased!');
+      res.send();
     })
     .catch((e) => {
-      throw new Error(res.json(e));
+      console.log(e);
     });
 });
 
 
-app.post('stock/sell', (req, res) => {
+app.post('/stock/sell', (req, res) => {
   const {stock} = req.body;
 
   let obj = {
