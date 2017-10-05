@@ -18,7 +18,8 @@ class Chart extends React.Component {
   }
 
   render() {
-    if (Object.keys(this.props.stock) === 0) {
+    console.log(typeof this.props.stock);
+    if (Object.keys(this.props.stock).length !== 0) {
       const chartStyle = { parent: {minWidth: '100%', marginLeft: '5%'}};
       let stockKeys = Object.keys(this.props.stock.series);
 
