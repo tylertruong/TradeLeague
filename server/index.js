@@ -26,16 +26,16 @@ const dummyStocks = [
   {name: 'Exxon Mobil', ticker: 'XOM'},
   {name: 'Apple', ticker: 'AAPL'},
   {name: 'Alphabet', ticker: 'GOOG'},
-  // {name: 'Microsoft', ticker: 'MSFT'},
-  // {name: 'Amazon', ticker: 'AMZN'},
-  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
-  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
-  // {name: 'FaceBook', ticker: 'FB'},
-  // {name: 'Visa', ticker: 'V'},
-  // {name: 'Walt Disney', ticker: 'DIS'},
-  // {name: 'McDonalds', ticker: 'MCD'},
-  // {name: '3M', ticker: 'MMM'},
-  // {name: 'Comcast', ticker: 'CCV'}
+  {name: 'Microsoft', ticker: 'MSFT'},
+  {name: 'Amazon', ticker: 'AMZN'},
+  {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  {name: 'FaceBook', ticker: 'FB'},
+  {name: 'Visa', ticker: 'V'},
+  {name: 'Walt Disney', ticker: 'DIS'},
+  {name: 'McDonalds', ticker: 'MCD'},
+  {name: '3M', ticker: 'MMM'},
+  {name: 'Comcast', ticker: 'CCV'}
 ];
 
 let currentStocks = [];
