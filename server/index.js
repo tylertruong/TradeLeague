@@ -21,27 +21,27 @@ const dummyStocks = [
   {name: 'Pfizer', ticker: 'PFE'},
   {name: 'Coca-Cola', ticker: 'KO'},
   {name: 'Nike', ticker: 'NKE'},
-  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  // {name: 'Morgan Stanley', ticker: 'MS'},
-  // {name: 'Exxon Mobil', ticker: 'XOM'},
-  // {name: 'Apple', ticker: 'AAPL'},
-  // {name: 'Alphabet', ticker: 'GOOG'},
-  // {name: 'Microsoft', ticker: 'MSFT'},
-  // {name: 'Amazon', ticker: 'AMZN'},
-  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
-  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
-  // {name: 'FaceBook', ticker: 'FB'},
-  // {name: 'Visa', ticker: 'V'},
-  // {name: 'Walt Disney', ticker: 'DIS'},
-  // {name: 'McDonalds', ticker: 'MCD'},
-  // {name: '3M', ticker: 'MMM'},
-  // {name: 'Comcast', ticker: 'CCV'}
+  {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  {name: 'Morgan Stanley', ticker: 'MS'},
+  {name: 'Exxon Mobil', ticker: 'XOM'},
+  {name: 'Apple', ticker: 'AAPL'},
+  {name: 'Alphabet', ticker: 'GOOG'},
+  {name: 'Microsoft', ticker: 'MSFT'},
+  {name: 'Amazon', ticker: 'AMZN'},
+  {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  {name: 'FaceBook', ticker: 'FB'},
+  {name: 'Visa', ticker: 'V'},
+  {name: 'Walt Disney', ticker: 'DIS'},
+  {name: 'McDonalds', ticker: 'MCD'},
+  {name: '3M', ticker: 'MMM'},
+//  {name: 'Comcast', ticker: 'CCV'}
 ];
 
 let currentStocks = [];
 let firstHalf = [];
 let secondHalf = [];
-let count = 1;
+let count = 0;
 let mid = Math.floor(dummyStocks.length / 2);
 
 app.use(express.static(path.join(__dirname, '../client/dist/')));
@@ -50,9 +50,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const cronJob = (stocks) => {
   if (count % 2 === 0) {
-    var dummyStock = dummyStocks.slice(mid);
-  } else {
     var dummyStock = dummyStocks.slice(0, mid);
+  } else {
+    var dummyStock = dummyStocks.slice(mid);
   }
   let dStocks = dummyStock.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
@@ -76,16 +76,17 @@ const cronJob = (stocks) => {
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
-      if (count % 2 !== 0) {
+      if (count % 2 === 0) {
         firstHalf = stocks;
       } else {
         secondHalf = stocks;
       }
+      count++;
     })
     .catch((err) => {
       console.log(err);
     });
-  count++;
+
 };
 
 cronJob(dummyStocks);
@@ -150,6 +151,6 @@ app.post('/stock/sell', (req, res) => {
 
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 1128;
 
 app.listen(PORT, () => { console.log('Listening on port ' + PORT); } );

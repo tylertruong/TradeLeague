@@ -21,6 +21,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetch();
+    setInterval(this.fetch.bind(this), 30000);
   }
 
   fetch() {
@@ -40,7 +41,6 @@ class App extends React.Component {
   
 
   updatePortfolio(stocks) {
-    console.log('allStocks', this.state.allStocks);
     let combo = stocks.map(stock => {
       for (let i = 0; i < this.state.allStocks.length; i++) {
         if (stock.symbol === this.state.allStocks[i].symbol) {
@@ -50,7 +50,6 @@ class App extends React.Component {
         }
       }
     });
-    console.log('combo', combo);
 
     return combo; 
 

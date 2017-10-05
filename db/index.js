@@ -1,11 +1,7 @@
 const mysql = require('mysql');
 
 
-let connection = mysql.createConnection({
-  user: 'root',
-  password: '',
-  database: 'trade'
-});
+let connection = mysql.createConnection(process.env.JAWSDB_URL);
 
 connection.connect();
 
