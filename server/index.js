@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('../db/index');
 const mysql = require('mysql');
-const fetcher = require('./apiFetcher.js');
-var request = require('request');
+const fetcher = require('../helper/apiFetcher.js');
+const request = require('request');
 
 
 let app = express();
@@ -13,18 +13,18 @@ let app = express();
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
   {name: 'General Electric', ticker: 'GE'},
-  {name: 'Delta Air Lines', ticker: 'DAL'},
-  {name: 'Snap', ticker: 'SNAP'},
-  {name: 'Bank of America', ticker: 'BAC'},
-  {name: 'AT&T', ticker: 'T'},
-  {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-Cola', ticker: 'KO'},
-  {name: 'Nike', ticker: 'NKE'},
-  {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Delta Air Lines', ticker: 'DAL'},
+  // {name: 'Snap', ticker: 'SNAP'},
+  // {name: 'Bank of America', ticker: 'BAC'},
+  // {name: 'AT&T', ticker: 'T'},
+  // {name: 'Twitter', ticker: 'TWTR'},
+  // {name: 'Pfizer', ticker: 'PFE'},
+  // {name: 'Coca-Cola', ticker: 'KO'},
+  // {name: 'Nike', ticker: 'NKE'},
+  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
   // {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
@@ -57,6 +57,11 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
       let stocks = data.map(stock => {
         const {data, name} = stock;
         const metadata = data['Meta Data'];
+
+        if (!metadata) {
+          throw new Error;
+        }
+
         const timeSeries = data['Time Series (1min)'];
         const symbol = metadata['2. Symbol'];
         const refresh = metadata['3. Last Refreshed'];
@@ -73,7 +78,7 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
 });
 
 
-app.get('portfolio/send-all', (req, res) => {
+app.get('/portfolio/send-all', (req, res) => {
   db.getPortfolio()
     .then((data) => {
       res.send(data);
@@ -84,7 +89,8 @@ app.get('portfolio/send-all', (req, res) => {
 
 });
 
-app.post('stock/buy', (req, res) => {
+app.post('/stock/buy', (req, res) => {
+  console.log('buying!');
   const {stock} = req.body;
 
   let obj = {
@@ -95,23 +101,25 @@ app.post('stock/buy', (req, res) => {
 
   db.saveStock(obj)
     .then((data) => {
-      res.send(data);
+      console.log('purchased!');
+      res.send();
     })
     .catch((e) => {
-      throw new Error(res.json(e));
+      console.log(e);
     });
 });
 
 
-app.post('stock/sell', (req, res) => {
+app.post('/stock/sell', (req, res) => {
   const {stock} = req.body;
 
   let obj = {
-    symbol: stock.name,
-    close: stock.series[stock.refresh]['4. close'],
+    symbol: stock.symbol,
+    close: stock.close,
     refresh: stock.refresh,
   };
   
+  console.log('obj', obj);
   db.sellStock(obj)
     .then((data) => {
       res.send();

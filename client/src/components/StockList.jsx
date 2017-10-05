@@ -1,5 +1,5 @@
 import React from 'react';
-import StockEntry from './StockEntry.jsx';
+import StockListEntry from './StockListEntry.jsx';
 import {Grid} from 'semantic-ui-react';
 
 class StockList extends React.Component {
@@ -11,13 +11,20 @@ class StockList extends React.Component {
   }
 
   render() {
-    return (
-      <Grid centered>
-        {this.props.stocks.map(stock => {
-          return <StockEntry key={stock.name} onTitleClick={this.props.onTitleClick} onStockClick={this.props.onStockClick} stock={stock} />;
-        })}
-      </Grid>
-    );
+    if (this.props.stocks) {
+      return (
+        <Grid centered>
+          {this.props.stocks.map(stock => {
+            return <StockListEntry key={stock.symbol} onTitleClick={this.props.onTitleClick} onStockClick={this.props.onStockClick} stock={stock} />;
+          })}
+        </Grid>
+      );
+    } else {
+      return (
+        <div>
+        </div>
+      );
+    }
   }
 }
 

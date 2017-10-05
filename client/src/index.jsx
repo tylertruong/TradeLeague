@@ -31,20 +31,39 @@ class App extends React.Component {
         this.setState({
           allStocks: data,
           currentStock: data[0]
+        }, () => {
+          this.getPortfolio();
         });
       }
     });
   }
   
+
+  updatePortfolio(stocks) {
+    console.log('allStocks', this.state.allStocks);
+    let combo = stocks.map(stock => {
+      for (let i = 0; i < this.state.allStocks.length; i++) {
+        if (stock.symbol === this.state.allStocks[i].symbol) {
+          stock.name = this.state.allStocks[i].name;
+          stock.series = this.state.allStocks[i].series;
+          return stock;
+        }
+      }
+    });
+    console.log('combo', combo);
+
+    return combo; 
+
+  }
+
   getPortfolio() {
     $.ajax({
       method: 'GET',
       url: '/portfolio/send-all',
       success: (data) => {
-        console.log(data);
-        // this.setState({
-        //   myStocks: value
-        // });
+        this.setState({
+          myStocks: this.updatePortfolio(data)
+        });
       },
       error: (data) => {
         console.log(data);
@@ -59,20 +78,6 @@ class App extends React.Component {
   }
 
   buyStock(value) {
-    // let myStocks = this.state.myStocks.slice();
-    // myStocks.push(value);
-   
-    // let allStocks = this.state.allStocks.slice();
-    // for (let i = 0; i < allStocks.length; i++) {
-    //   if (allStocks[i].name === value.name) {
-    //     allStocks.splice(i, 1);
-    //   }
-    // }
-
-    // this.setState({
-    //   myStocks: myStocks,
-    //   allStocks: allStocks
-    // });
 
     $.ajax({
       method: 'POST',
@@ -80,6 +85,7 @@ class App extends React.Component {
       data: {stock: value},
       success: (data) => {
         console.log('bought!');
+        this.getPortfolio();
       },
       error: (data) => {
         console.log(data);
@@ -87,24 +93,28 @@ class App extends React.Component {
     });
 
   }
+  
+  processSellStock(value) {
+    let stock = value;
+    
+    for (let i = 0; i < this.state.allStocks.length; i++) {
+      if (this.state.allStocks[i].symbol === stock.symbol) {
+        stock.refresh = this.state.allStocks[i].refresh;
+        stock.close = this.state.allStocks[i].series[stock.refresh]['4. close'];
+      }
+    } 
+    return stock;
+  }
 
   sellStock(value) {
-    // let myStocks = this.state.myStocks.slice();
-    // for (let i = 0; i < myStocks.length; i++) {
-    //   if (myStocks[i].name === value.name) {
-    //     myStocks.splice(i, 1);
-    //   }
-    // }
-    // this.setState({
-    //   myStocks: myStocks
-    // });
-
+    
     $.ajax({
       method: 'POST',
       url: '/stock/sell',
-      data: {stock: value},
+      data: {stock: this.processSellStock(value)},
       success: (data) => {
         console.log('sell!');
+        this.getPortfolio();
       },
       error: (data) => {
         console.log(data);
