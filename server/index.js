@@ -13,12 +13,12 @@ let app = express();
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
   {name: 'General Electric', ticker: 'GE'},
-  // {name: 'Delta Air Lines', ticker: 'DAL'},
-  // {name: 'Snap', ticker: 'SNAP'},
-  // {name: 'Bank of America', ticker: 'BAC'},
-  // {name: 'AT&T', ticker: 'T'},
-  // {name: 'Twitter', ticker: 'TWTR'},
-  // {name: 'Pfizer', ticker: 'PFE'},
+  {name: 'Delta Air Lines', ticker: 'DAL'},
+  {name: 'Snap', ticker: 'SNAP'},
+  {name: 'Bank of America', ticker: 'BAC'},
+  {name: 'AT&T', ticker: 'T'},
+  {name: 'Twitter', ticker: 'TWTR'},
+  {name: 'Pfizer', ticker: 'PFE'}
   // {name: 'Coca-Cola', ticker: 'KO'},
   // {name: 'Nike', ticker: 'NKE'},
   // {name: 'Wal-Mart Stores', ticker: 'WMT'},
@@ -39,14 +39,22 @@ const dummyStocks = [
 ];
 
 let currentStocks = [];
+let firstHalf = [];
+let secondHalf = [];
+let count = 1;
+let mid = Math.floor(dummyStocks.length / 2);
 
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const cronJob = (stocks) => {
-
-  let dStocks = stocks.map(stock => {
+  if (count % 2 === 0) {
+    var dummyStock = dummyStocks.slice(mid);
+  } else {
+    var dummyStock = dummyStocks.slice(0, mid);
+  }
+  let dStocks = dummyStock.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
       return {data: data.data, name: stock.name};
     });
@@ -68,16 +76,25 @@ const cronJob = (stocks) => {
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
-      currentStocks = stocks;
+      if (count % 2 !== 0) {
+        firstHalf = stocks;
+      } else {
+        secondHalf = stocks;
+      }
+      // currentStocks = stocks;
+      console.log('CURRENT STOCKS!!!!!!', firstHalf.concat(secondHalf));
     })
     .catch((err) => {
       console.log(err);
     });
+  count++;
 };
 
-setInterval(() => cronJob(dummyStocks), 500);
+cronJob(dummyStocks);
+setInterval(() => cronJob(dummyStocks), 60000);
 
 app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
+  currentStocks = firstHalf.concat(secondHalf);
   res.status(200).send(currentStocks);
 });
 
