@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS trade;
-CREATE DATABASE trade;
-USE trade;
+DROP DATABASE IF EXISTS vbfm2izfxg6l03xp;
+CREATE DATABASE vbfm2izfxg6l03xp;
+USE vbfm2izfxg6l03xp;
 
 DROP TABLE IF EXISTS events;
 CREATE TABLE events (

@@ -150,6 +150,6 @@ app.post('/stock/sell', (req, res) => {
 
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 1128;
 
 app.listen(PORT, () => { console.log('Listening on port ' + PORT); } );
