@@ -18,27 +18,29 @@ const dummyStocks = [
   {name: 'Bank of America', ticker: 'BAC'},
   {name: 'AT&T', ticker: 'T'},
   {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-Cola', ticker: 'KO'},
-  {name: 'Nike', ticker: 'NKE'},
-  {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
-  {name: 'Alphabet', ticker: 'GOOG'},
-  {name: 'Microsoft', ticker: 'MSFT'},
-  {name: 'Amazon', ticker: 'AMZN'},
-  {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
-  {name: 'Johnson & Johnson', ticker: 'JNJ'},
-  {name: 'FaceBook', ticker: 'FB'},
-  {name: 'Visa', ticker: 'V'},
-  {name: 'Walt Disney', ticker: 'DIS'},
-  {name: 'McDonalds', ticker: 'MCD'},
-  {name: '3M', ticker: 'MMM'},
-  {name: 'Comcast', ticker: 'CCV'}
+  {name: 'Pfizer', ticker: 'PFE'}
+  // {name: 'Coca-Cola', ticker: 'KO'},
+  // {name: 'Nike', ticker: 'NKE'},
+  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Alphabet', ticker: 'GOOG'},
+  // {name: 'Microsoft', ticker: 'MSFT'},
+  // {name: 'Amazon', ticker: 'AMZN'},
+  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  // {name: 'FaceBook', ticker: 'FB'},
+  // {name: 'Visa', ticker: 'V'},
+  // {name: 'Walt Disney', ticker: 'DIS'},
+  // {name: 'McDonalds', ticker: 'MCD'},
+  // {name: '3M', ticker: 'MMM'},
+  // {name: 'Comcast', ticker: 'CCV'}
 ];
 
 let currentStocks = [];
+let firstHalf = [];
+let secondHalf = [];
 let count = 1;
 let mid = Math.floor(dummyStocks.length / 2);
 
@@ -48,9 +50,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const cronJob = (stocks) => {
   if (count % 2 === 0) {
-    let dummyStock = dummyStocks.slice(mid);
+    var dummyStock = dummyStocks.slice(mid);
   } else {
-    let dummyStock = dummyStocks.slice(0, mid);
+    var dummyStock = dummyStocks.slice(0, mid);
   }
   let dStocks = dummyStock.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
@@ -74,7 +76,13 @@ const cronJob = (stocks) => {
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
-      currentStocks = stocks;
+      if (count % 2 !== 0) {
+        firstHalf = stocks;
+      } else {
+        secondHalf = stocks;
+      }
+      // currentStocks = stocks;
+      console.log('CURRENT STOCKS!!!!!!', firstHalf.concat(secondHalf));
     })
     .catch((err) => {
       console.log(err);
@@ -82,9 +90,11 @@ const cronJob = (stocks) => {
   count++;
 };
 
-setInterval(() => cronJob(dummyStocks), 500);
+cronJob(dummyStocks);
+setInterval(() => cronJob(dummyStocks), 60000);
 
 app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
+  currentStocks = firstHalf.concat(secondHalf);
   res.status(200).send(currentStocks);
 });
 
