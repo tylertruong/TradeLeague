@@ -1,0 +1,21 @@
+div.header {
+  width: 100%;
+}
+
+div.surround {
+  background-color: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  box-shadow: 0 2px 2px 0 #d3d3d3;
+
+  line-height: 50px;
+  color: #ef6045;
+}
+
+.text {
+  margin-left:70px;
+}
+
+.logo:hover{
+  color: black;
+}

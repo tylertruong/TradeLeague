@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { VictoryChart, VictoryZoomContainer, VictoryLine, VictoryAxis, VictoryBrushContainer } from 'victory';
 import { connect } from 'react-redux';
 
-class Chart extends React.Component {
+class Chart extends Component {
 
   render() {
     if (!this.props.stock || Object.keys(this.props.stock).length === 0) {
@@ -40,22 +40,3 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(Chart);
 
-/*
-
-          containerComponent={
-            <VictoryZoomContainer responsive={false}
-              dimension="x"
-              zoomDomain={this.state.zoomDomain}
-              onDomainChange={this.handleZoom.bind(this)}
-            />
-          }
-
-
-            handleZoom(domain) {
-    this.setState({selectedDomain: domain});
-  }
-
-  handleBrush(domain) {
-    this.setState({zoomDomain: domain});
-  }
-  */
