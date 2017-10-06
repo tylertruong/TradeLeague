@@ -26,15 +26,15 @@ const dummyStocks = [
   {name: 'Exxon Mobil', ticker: 'XOM'},
   {name: 'Apple', ticker: 'AAPL'},
   {name: 'Alphabet', ticker: 'GOOG'},
-  {name: 'Microsoft', ticker: 'MSFT'},
-  {name: 'Amazon', ticker: 'AMZN'},
-  {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
-  {name: 'Johnson & Johnson', ticker: 'JNJ'},
-  {name: 'FaceBook', ticker: 'FB'},
-  {name: 'Visa', ticker: 'V'},
-  {name: 'Walt Disney', ticker: 'DIS'},
-  {name: 'McDonalds', ticker: 'MCD'},
-  {name: '3M', ticker: 'MMM'},
+  // {name: 'Microsoft', ticker: 'MSFT'},
+  // {name: 'Amazon', ticker: 'AMZN'},
+  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  // {name: 'Facebook', ticker: 'FB'},
+  // {name: 'Visa', ticker: 'V'},
+  // {name: 'Walt Disney', ticker: 'DIS'},
+  // {name: 'McDonalds', ticker: 'MCD'},
+  // {name: '3M', ticker: 'MMM'},
 //  {name: 'Comcast', ticker: 'CCV'}
 ];
 
@@ -90,7 +90,7 @@ const cronJob = (stocks) => {
 };
 
 cronJob(dummyStocks);
-setInterval(() => cronJob(dummyStocks), 60000);
+setInterval(() => cronJob(dummyStocks), 65000);
 
 app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
   currentStocks = firstHalf.concat(secondHalf);
@@ -112,11 +112,14 @@ app.get('/portfolio/send-all', (req, res) => {
 app.post('/stock/buy', (req, res) => {
   console.log('buying!');
   const {stock} = req.body;
+  const {symbol, series, refresh, quantity} = stock;
 
   let obj = {
-    symbol: stock.symbol,
-    close: stock.series[stock.refresh]['4. close'],
-    refresh: stock.refresh,
+    symbol: symbol,
+    close: series[refresh]['4. close'],
+    refresh: refresh,
+    volume: quantity,
+    trader: 'Gordon'
   };
 
   db.saveStock(obj)
@@ -132,14 +135,16 @@ app.post('/stock/buy', (req, res) => {
 
 app.post('/stock/sell', (req, res) => {
   const {stock} = req.body;
+  const {symbol, refresh, quantity, close} = stock;
 
   let obj = {
-    symbol: stock.symbol,
-    close: stock.close,
-    refresh: stock.refresh,
+    symbol: symbol,
+    close: close,
+    refresh: refresh,
+    volume: quantity,
+    trader: 'Gordon'
   };
   
-  console.log('obj', obj);
   db.sellStock(obj)
     .then((data) => {
       res.send();
