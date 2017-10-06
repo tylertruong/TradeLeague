@@ -7,7 +7,7 @@ class Chart extends Component {
   render() {
     let stockKeys = [];
     if (this.props.stock && Object.keys(this.props.stock).length !== 0) {
-      stockKeys = Object.keys(this.props.stock.series);
+      stockKeys = Object.keys(this.props.stock.series).reverse();
     }
 
     const chartStyle = { parent: {minWidth: '100%', marginLeft: '2%', marginRight: '10%'}};

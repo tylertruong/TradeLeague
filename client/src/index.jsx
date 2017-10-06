@@ -6,7 +6,6 @@ import ReduxPromise from 'redux-promise';
 import reducers from './reducers';
 
 import {Divider} from 'semantic-ui-react';
-import $ from 'jquery';
 import StockList from './containers/StockList.jsx';
 import StockFeed from './containers/StockFeed.jsx';
 import Chart from './containers/Chart.jsx';

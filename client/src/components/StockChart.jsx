@@ -11,7 +11,7 @@ class StockChart extends React.Component {
 
   render() {
     const chartStyle = { parent: {minWidth: '100%'}};
-    let stockKeys = Object.keys(this.props.stock.series);
+    let stockKeys = Object.keys(this.props.stock.series).reverse();
     return (
       <div>
         <VictoryChart width={1000} height={500} scale={{x: 'time'}} style={chartStyle}

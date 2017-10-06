@@ -3,8 +3,6 @@ import axios from 'axios';
 export const STOCK_SELECTED = 'STOCK_SELECTED';
 export const GET_PORTFOLIO = 'GET_PORTFOLIO';
 export const FETCH_STOCKS = 'FETCH_STOCKS';
-export const BUY_STOCK = 'BUY_STOCK';
-export const SELL_STOCK = 'SELL_STOCK';
 
 export const selectStock = (stock) => {
   return {
