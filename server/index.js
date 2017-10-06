@@ -117,6 +117,8 @@ app.post('/stock/buy', (req, res) => {
     symbol: stock.symbol,
     close: stock.series[stock.refresh]['4. close'],
     refresh: stock.refresh,
+    volume: stock.quantity,
+    trader: 'Gordon'
   };
 
   db.saveStock(obj)
@@ -137,6 +139,8 @@ app.post('/stock/sell', (req, res) => {
     symbol: stock.symbol,
     close: stock.close,
     refresh: stock.refresh,
+    volume: stock.quantity,
+    trader: 'Gordon'
   };
   
   db.sellStock(obj)
