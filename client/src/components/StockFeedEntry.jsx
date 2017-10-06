@@ -6,7 +6,7 @@ let StockFeedEntry = (props) => {
   return (
     <Grid.Column mobile={12} tablet={6} computer={5}>
       <Segment>
-        <Header as='h2' onClick={() => props.onTitleClick(props.stock)} >{props.stock.name}</Header> 
+        <Header as='h4' onClick={() => props.onTitleClick(props.stock)} >{props.stock.name}</Header> 
         Symbol: {props.stock.symbol} <br></br>
         Open: {props.stock.series[props.stock.refresh]['1. open']} <br></br>
         Close: {props.stock.series[props.stock.refresh]['4. close']} <br></br>

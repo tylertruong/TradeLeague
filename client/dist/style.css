@@ -19,3 +19,7 @@ div.surround {
 .logo:hover{
   color: black;
 }
+
+h3 {
+  margin-left: 40px;
+}

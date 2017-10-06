@@ -30,11 +30,14 @@ class StockFeed extends Component {
 
   render() {
     return (
-      <Grid centered>
-        {this.props.stocks.map(stock => {
-          return <StockFeedEntry key={stock.name} onTitleClick={this.props.selectStock} onStockClick={this.buyStock} stock={stock} />;
-        })}   
-      </Grid>
+      <div>
+        <h3>Stocks</h3>
+        <Grid centered>
+          {this.props.stocks.map(stock => {
+            return <StockFeedEntry key={stock.name} onTitleClick={this.props.selectStock} onStockClick={this.buyStock} stock={stock} />;
+          })}   
+        </Grid>
+      </div>
     );
   }
 }

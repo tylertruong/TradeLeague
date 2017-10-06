@@ -56,11 +56,14 @@ class StockList extends React.Component {
     }
 
     return (
-      <Grid centered>
-        {this.props.portfolio.map(stock => {
-          return <StockListEntry key={stock.symbol} onTitleClick={this.props.selectStock} onStockClick={this.sellStock} stock={this.updatePortfolioStock(stock)} />;
-        })}
-      </Grid>
+      <div style={{backgroundColor: '#e5e5e5', paddingTop: '2%'}}>
+        <h3>Portfolio</h3>
+        <Grid centered>
+          {this.props.portfolio.map(stock => {
+            return <StockListEntry key={stock.symbol} onTitleClick={this.props.selectStock} onStockClick={this.sellStock} stock={this.updatePortfolioStock(stock)} />;
+          })}
+        </Grid>
+      </div>
     );
   }
 }

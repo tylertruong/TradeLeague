@@ -3,10 +3,13 @@ import {Grid, Segment, Header, Icon} from 'semantic-ui-react';
 import StockChart from './StockChart.jsx';
 
 let StockListEntry = (props) => {
+  if (!props.stock) {
+    return <div></div>;
+  }
   return (
     <Grid.Column mobile={12} tablet={6} computer={5}>
       <Segment>
-        <Header as='h2' onClick={() => props.onTitleClick(props.stock)} >{props.stock.name}</Header> 
+        <Header as='h4' onClick={() => props.onTitleClick(props.stock)} >{props.stock.name}</Header> 
         Symbol: {props.stock.symbol} <br></br>
         Net Gain: {props.stock.net_gain} <br></br>
         Number of Shares: {props.stock.number_of_shares} <br></br>

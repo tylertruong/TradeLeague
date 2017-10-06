@@ -28,7 +28,7 @@ class Summary extends Component {
         <Menu.Item name={`Total Gain ${this.findTotalGain()}`} />
         <Menu.Item name={`Total Cost ${this.findTotalCost()}`} />
         {this.props.portfolio.map(stock => {
-          return <Menu.Item name={`${stock.symbol} ${stock.number_of_shares}`} />;
+          return <Menu.Item key={stock.symbol} name={`${stock.symbol} ${stock.number_of_shares}`} />;
         })
 
         }

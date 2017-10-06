@@ -5,15 +5,16 @@ import { connect } from 'react-redux';
 class Chart extends Component {
 
   render() {
-    if (!this.props.stock || Object.keys(this.props.stock).length === 0) {
-      return <div></div>;
+    let stockKeys = [];
+    if (this.props.stock && Object.keys(this.props.stock).length !== 0) {
+      stockKeys = Object.keys(this.props.stock.series);
     }
 
-    const chartStyle = { parent: {minWidth: '100%', marginLeft: '5%'}};
-    let stockKeys = Object.keys(this.props.stock.series);
+    const chartStyle = { parent: {minWidth: '100%', marginLeft: '2%', marginRight: '10%'}};
 
     return (
       <div>
+        <h3>{this.props.stock ? this.props.stock.name : 'Graph'}</h3>
         <VictoryChart width={1000} height={450} scale={{x: 'time'}} style={chartStyle}>
           <VictoryLine
             style={{
