@@ -19,8 +19,8 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div style={{margin: '10px'}}>
-        <Input style={{width: '600px', marginRight: '1px'}} onChange={this.searchTerm.bind(this)}></Input>
+      <div className='search-bar'>
+        <Input onChange={this.searchTerm.bind(this)} className='search-bar-input'></Input>
         <Button onClick={() => this.props.searchStocks(this.state.term)}>Search</Button>
       </div>
     );

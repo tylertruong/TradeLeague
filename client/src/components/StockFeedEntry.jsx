@@ -30,7 +30,7 @@ class StockFeedEntry extends Component {
 
     return (
       <Grid.Column mobile={12} tablet={6} computer={5}>
-        <Segment style={{paddingBottom: '15%'}}>
+        <Segment className='stock-feed-entry-segment'>
           <Header as='h4' onClick={() => this.props.onTitleClick(this.props.stock)} >{this.props.stock.name}</Header> 
           Symbol: {this.props.stock.symbol} <br></br>
           Open: {this.props.stock.series[this.props.stock.refresh]['1. open']} <br></br>
@@ -38,7 +38,7 @@ class StockFeedEntry extends Component {
           Volume: {this.props.stock.series[this.props.stock.refresh]['5. volume']} <br></br>
           Last Refreshed: {this.props.stock.refresh} <br></br>
           <StockChart stock={this.props.stock} /><br></br>
-          <div style={{float: 'right'}} >
+          <div className='stock-feed-entry-submit'>
             <form onSubmit={this.onFormSubmit}>
               <Input type="number" value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Buy</Button>
             </form>
