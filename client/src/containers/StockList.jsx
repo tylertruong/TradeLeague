@@ -58,7 +58,7 @@ class StockList extends Component {
 
     return (
       <div className='stock-list'>
-        <h3>Portfolio</h3>
+        <h3 className='h3'>Portfolio</h3>
         <Grid centered>
           {this.props.portfolio.map(stock => {
             return <StockListEntry key={stock.symbol} onTitleClick={this.props.selectStock} onStockClick={this.sellStock} stock={this.updatePortfolioStock(stock)} />;
