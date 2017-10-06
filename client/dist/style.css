@@ -23,3 +23,33 @@ div.surround {
 h3 {
   margin-left: 40px;
 }
+
+.search-bar {
+  margin: '10px'
+}
+
+.search-bar-input {
+  width: '600px';
+  margin-right: '1px';
+}
+
+.stock-feed-entry-segment {
+  padding-bottom: '15%';
+}
+
+.stock-feed-entry-submit {
+  float: 'right';
+}
+
+.stock-list-entry-segment {
+  padding-bottom: '15%'
+}
+
+.stock-list-entry-submit {
+  float: 'right';
+}
+
+.stock-list {
+  background-color: #e5e5e5;
+  padding-top: '2%';
+}

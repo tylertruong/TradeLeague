@@ -57,7 +57,7 @@ class StockList extends Component {
     }
 
     return (
-      <div style={{backgroundColor: '#e5e5e5', paddingTop: '2%'}}>
+      <div className='stock-list'>
         <h3>Portfolio</h3>
         <Grid centered>
           {this.props.portfolio.map(stock => {
