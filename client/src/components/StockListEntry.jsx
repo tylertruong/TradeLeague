@@ -29,7 +29,7 @@ class StockListEntry extends Component {
 
     return (
       <Grid.Column mobile={12} tablet={6} computer={5}>
-        <Segment className='stock-list-entry-segment'>
+        <Segment >
           <Header as='h4' onClick={() => this.props.onTitleClick(this.props.stock)} >{this.props.stock.name}</Header> 
           Symbol: {this.props.stock.symbol} <br></br>
           Net Gain: {this.props.stock.net_gain} <br></br>
@@ -37,7 +37,7 @@ class StockListEntry extends Component {
           Total Cost: {this.props.stock.total_cost} <br></br>
           Last Event: {this.props.stock.time_of_last_event} <br></br>
           <StockChart stock={this.props.stock} /><br></br>
-          <div className='stock-list-entry-submit'>
+          <div>
             <form onSubmit={this.onFormSubmit}>
               <Input type="number" value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Sell</Button>
             </form>
