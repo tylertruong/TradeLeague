@@ -19,9 +19,11 @@ class StockFeed extends Component {
     this.props.fetchStocks();
   }
 
-  buyStock(value) {
+  buyStock(value, quantity) {
+    let obj = value;
+    obj.quantity = quantity;
     const request = axios.post('/stock/buy', {
-      stock: value
+      stock: obj
     });
 
     request

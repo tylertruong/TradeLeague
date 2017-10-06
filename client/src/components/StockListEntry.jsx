@@ -1,29 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {Grid, Segment, Header, Icon} from 'semantic-ui-react';
 import StockChart from './StockChart.jsx';
+import {Input, Button} from 'semantic-ui-react';
 
-let StockListEntry = (props) => {
-  if (!props.stock) {
-    return <div></div>;
+class StockListEntry extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { quantity: 0};
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
-  return (
-    <Grid.Column mobile={12} tablet={6} computer={5}>
-      <Segment>
-        <Header as='h4' onClick={() => props.onTitleClick(props.stock)} >{props.stock.name}</Header> 
-        Symbol: {props.stock.symbol} <br></br>
-        Net Gain: {props.stock.net_gain} <br></br>
-        Number of Shares: {props.stock.number_of_shares} <br></br>
-        Total Cost: {props.stock.total_cost} <br></br>
-        Last Event: {props.stock.time_of_last_event} <br></br>
-        <StockChart stock={props.stock} /><br></br>
-        <div style={{float: 'right'}}>
-          <Icon name='checkmark' size='large' onClick={() => props.onStockClick(props.stock)} /> 
-        </div>
-        <br></br>
-      </Segment>
-    </Grid.Column>
-  );
-};
+  
+  onInputChange(event) {
+    this.setState({quantity: event.target.value});
+  }
+
+  onFormSubmit(event) {
+    event.preventDefault();
+    this.props.onStockClick(this.props.stock, this.state.quantity);
+    this.setState({ quantity: 0 });
+  }
+
+  render() {
+    if (!this.props.stock) {
+      return <div></div>;
+    }
+
+    return (
+      <Grid.Column mobile={12} tablet={6} computer={5}>
+        <Segment style={{paddingBottom: '15%'}}>
+          <Header as='h4' onClick={() => this.props.onTitleClick(this.props.stock)} >{this.props.stock.name}</Header> 
+          Symbol: {this.props.stock.symbol} <br></br>
+          Net Gain: {this.props.stock.net_gain} <br></br>
+          Number of Shares: {this.props.stock.number_of_shares} <br></br>
+          Total Cost: {this.props.stock.total_cost} <br></br>
+          Last Event: {this.props.stock.time_of_last_event} <br></br>
+          <StockChart stock={this.props.stock} /><br></br>
+          <div style={{float: 'right'}} >
+            <form onSubmit={this.onFormSubmit}>
+              <Input type="number" value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Sell</Button>
+            </form>
+          </div>
+        </Segment>
+      </Grid.Column>
+    );
+  }
+}
 
 export default StockListEntry;
 

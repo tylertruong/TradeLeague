@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import StockListEntry from '../components/StockListEntry.jsx';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 
-class StockList extends React.Component {
+class StockList extends Component {
 
   constructor(props) {
     super(props);
@@ -20,17 +20,18 @@ class StockList extends React.Component {
     this.props.getPortfolio();
   }
 
-  sellStock(value) {
+  sellStock(value, quantity) {
     const request = axios.post('/stock/sell', {
-      stock: this.processSellStock(value)
+      stock: this.processSellStock(value, quantity)
     });
 
     request
       .then(this.props.getPortfolio);
   }
   
-  processSellStock (value) {
+  processSellStock (value, quantity) {
     let stock = value;
+    stock.quantity = quantity;
     for (let i = 0; i < this.props.stocks.length; i++) {
       if (this.props.stocks[i].symbol === stock.symbol) {
         stock.refresh = this.props.stocks[i].refresh;

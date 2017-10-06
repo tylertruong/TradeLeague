@@ -13,13 +13,13 @@ let app = express();
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
   {name: 'General Electric', ticker: 'GE'},
-  {name: 'Delta Air Lines', ticker: 'DAL'},
-  {name: 'Snap', ticker: 'SNAP'},
-  {name: 'Bank of America', ticker: 'BAC'},
-  {name: 'AT&T', ticker: 'T'},
-  {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-Cola', ticker: 'KO'},
+  // {name: 'Delta Air Lines', ticker: 'DAL'},
+  // {name: 'Snap', ticker: 'SNAP'},
+  // {name: 'Bank of America', ticker: 'BAC'},
+  // {name: 'AT&T', ticker: 'T'},
+  // {name: 'Twitter', ticker: 'TWTR'},
+  // {name: 'Pfizer', ticker: 'PFE'},
+  // {name: 'Coca-Cola', ticker: 'KO'},
   // {name: 'Nike', ticker: 'NKE'},
   // {name: 'Wal-Mart Stores', ticker: 'WMT'},
   // {name: 'Morgan Stanley', ticker: 'MS'},
@@ -139,7 +139,6 @@ app.post('/stock/sell', (req, res) => {
     refresh: stock.refresh,
   };
   
-  console.log('obj', obj);
   db.sellStock(obj)
     .then((data) => {
       res.send();
