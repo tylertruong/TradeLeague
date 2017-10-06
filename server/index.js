@@ -112,12 +112,13 @@ app.get('/portfolio/send-all', (req, res) => {
 app.post('/stock/buy', (req, res) => {
   console.log('buying!');
   const {stock} = req.body;
+  const {symbol, series, refresh, quantity} = stock;
 
   let obj = {
-    symbol: stock.symbol,
-    close: stock.series[stock.refresh]['4. close'],
-    refresh: stock.refresh,
-    volume: stock.quantity,
+    symbol: symbol,
+    close: series[refresh]['4. close'],
+    refresh: refresh,
+    volume: quantity,
     trader: 'Gordon'
   };
 
@@ -134,12 +135,13 @@ app.post('/stock/buy', (req, res) => {
 
 app.post('/stock/sell', (req, res) => {
   const {stock} = req.body;
+  const {symbol, refresh, quantity, close} = stock;
 
   let obj = {
-    symbol: stock.symbol,
-    close: stock.close,
-    refresh: stock.refresh,
-    volume: stock.quantity,
+    symbol: symbol,
+    close: close,
+    refresh: refresh,
+    volume: quantity,
     trader: 'Gordon'
   };
   
