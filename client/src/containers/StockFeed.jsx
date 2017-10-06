@@ -4,12 +4,15 @@ import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { selectStock, getPortfolio, fetchStocks } from '../actions/index';
 import { bindActionCreators } from 'redux';
+import axios from 'axios';
 
 class StockFeed extends Component {
 
   constructor(props) {
     super(props);
     this.buyStock = this.buyStock.bind(this);
+    this.props.fetchStocks();
+    setInterval(this.props.fetchStocks, 15000);
   }
 
   componentDidMount() {

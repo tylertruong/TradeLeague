@@ -1,5 +1,5 @@
 import React from 'react';
-import StockListEntry from './StockListEntry.jsx';
+import StockListEntry from '../components/StockListEntry.jsx';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { selectStock, getPortfolio } from '../actions/index';
@@ -31,10 +31,10 @@ class StockList extends React.Component {
   
   processSellStock (value) {
     let stock = value;
-    for (let i = 0; i < this.props.stock.length; i++) {
-      if (this.props.stock[i].symbol === stock.symbol) {
-        stock.refresh = this.props.stock[i].refresh;
-        stock.close = this.props.stock[i].series[stock.refresh]['4. close'];
+    for (let i = 0; i < this.props.stocks.length; i++) {
+      if (this.props.stocks[i].symbol === stock.symbol) {
+        stock.refresh = this.props.stocks[i].refresh;
+        stock.close = this.props.stocks[i].series[stock.refresh]['4. close'];
       }
     } 
     return stock;

@@ -4,16 +4,8 @@ import { connect } from 'react-redux';
 
 class Chart extends React.Component {
 
-  handleZoom(domain) {
-    this.setState({selectedDomain: domain});
-  }
-
-  handleBrush(domain) {
-    this.setState({zoomDomain: domain});
-  }
-
   render() {
-    if (Object.keys(this.props.stock).length === 0) {
+    if (!this.props.stock || Object.keys(this.props.stock).length === 0) {
       return <div></div>;
     }
 
@@ -22,15 +14,7 @@ class Chart extends React.Component {
 
     return (
       <div>
-        <VictoryChart width={1000} height={450} scale={{x: 'time'}} style={chartStyle}
-          containerComponent={
-            <VictoryZoomContainer responsive={false}
-              dimension="x"
-              zoomDomain={this.state.zoomDomain}
-              onDomainChange={this.handleZoom.bind(this)}
-            />
-          }
-        >
+        <VictoryChart width={1000} height={450} scale={{x: 'time'}} style={chartStyle}>
           <VictoryLine
             style={{
               data: {stroke: 'tomato'}
@@ -56,4 +40,22 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(Chart);
 
+/*
 
+          containerComponent={
+            <VictoryZoomContainer responsive={false}
+              dimension="x"
+              zoomDomain={this.state.zoomDomain}
+              onDomainChange={this.handleZoom.bind(this)}
+            />
+          }
+
+
+            handleZoom(domain) {
+    this.setState({selectedDomain: domain});
+  }
+
+  handleBrush(domain) {
+    this.setState({zoomDomain: domain});
+  }
+  */

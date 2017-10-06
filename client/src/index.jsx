@@ -31,7 +31,7 @@ class App extends Component {
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleWare(reducers)}>
+  <Provider store={createStoreWithMiddleware(reducers)}>
     <App />
   </Provider>
   , document.getElementById('app'));

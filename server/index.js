@@ -20,21 +20,21 @@ const dummyStocks = [
   {name: 'Twitter', ticker: 'TWTR'},
   {name: 'Pfizer', ticker: 'PFE'},
   {name: 'Coca-Cola', ticker: 'KO'},
-  {name: 'Nike', ticker: 'NKE'},
-  {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
-  {name: 'Alphabet', ticker: 'GOOG'},
-  {name: 'Microsoft', ticker: 'MSFT'},
-  {name: 'Amazon', ticker: 'AMZN'},
-  {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
-  {name: 'Johnson & Johnson', ticker: 'JNJ'},
-  {name: 'FaceBook', ticker: 'FB'},
-  {name: 'Visa', ticker: 'V'},
-  {name: 'Walt Disney', ticker: 'DIS'},
-  {name: 'McDonalds', ticker: 'MCD'},
-  {name: '3M', ticker: 'MMM'},
+  // {name: 'Nike', ticker: 'NKE'},
+  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Alphabet', ticker: 'GOOG'},
+  // {name: 'Microsoft', ticker: 'MSFT'},
+  // {name: 'Amazon', ticker: 'AMZN'},
+  // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
+  // {name: 'Johnson & Johnson', ticker: 'JNJ'},
+  // {name: 'Facebook', ticker: 'FB'},
+  // {name: 'Visa', ticker: 'V'},
+  // {name: 'Walt Disney', ticker: 'DIS'},
+  // {name: 'McDonalds', ticker: 'MCD'},
+  // {name: '3M', ticker: 'MMM'},
 //  {name: 'Comcast', ticker: 'CCV'}
 ];
 
@@ -90,7 +90,7 @@ const cronJob = (stocks) => {
 };
 
 cronJob(dummyStocks);
-setInterval(() => cronJob(dummyStocks), 60000);
+setInterval(() => cronJob(dummyStocks), 65000);
 
 app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
   currentStocks = firstHalf.concat(secondHalf);
