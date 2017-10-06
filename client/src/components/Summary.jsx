@@ -13,10 +13,7 @@ class Summary extends React.Component {
     return (
       <Segment>
         <Header as='h2'>Summary</Header>
-        Upside:  3%<br></br>
-        Capital:  $1.03<br></br>
-        Invested: 100%<br></br>
-        Clock: 28.25<br></br>
+        Upside:  3%   Capital:  $1.03  Invested: 100%  Clock: 28.25
       </Segment>
     );
   }
