@@ -11,7 +11,8 @@ const Strategy = require('passport-facebook').Strategy;
 passport.use(new Strategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/login/facebook/return'
+  callbackURL: 'http://tradeleague-staging.herokuapp.com/login/facebook/return',
+  profileFields: ['id', 'displayName', 'email']
 },
 (accessToken, refreshToken, profile, cb) => {
   return cb(null, profile);
