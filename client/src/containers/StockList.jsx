@@ -61,6 +61,9 @@ class StockList extends Component {
         <h3 className='h3'>Portfolio</h3>
         <Grid centered>
           {this.props.portfolio.map(stock => {
+            if (stock.number_of_shares === 0) {
+              return;
+            }
             return <StockListEntry key={stock.symbol} onTitleClick={this.props.selectStock} onStockClick={this.sellStock} stock={this.updatePortfolioStock(stock)} />;
           })}
         </Grid>
