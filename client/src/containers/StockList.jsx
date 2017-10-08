@@ -52,7 +52,7 @@ class StockList extends Component {
   }
 
   render() {
-    if (!this.props.portfolio) {
+    if (this.props.portfolio.length === 0) {
       return <div></div>;
     }
 
