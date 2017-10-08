@@ -7,6 +7,7 @@ const fetcher = require('../helper/apiFetcher.js');
 const request = require('request');
 const passport = require('passport');
 const Strategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
  
 passport.use(new Strategy({
   clientID: process.env.CLIENT_ID,
@@ -35,6 +36,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(session({ secret: 'keyboard cat', cookie: { user: '' } }));
 
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
@@ -114,7 +117,6 @@ const cronJob = (stocks) => {
 cronJob(dummyStocks);
 setInterval(() => cronJob(dummyStocks), 65000);
 
-let loggedInUser = '';
 
 app.get('/login/google',
   passport.authenticate('google', { scope: ['profile'] }));
@@ -123,7 +125,7 @@ app.get('/login/google',
 app.get('/login/google/return', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    loggedInUser = req.user.id;
+    req.session.user = req.user.id;
     res.redirect('/');
   }
 );
@@ -134,73 +136,75 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
 });
 
 
-app.get('/portfolio/send-all', (req, res) => {
-  if (!loggedInUser) {
-    res.send([]);
-  } else {
-    db.getPortfolio(loggedInUser)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((e) => {
-        throw new Error(res.json(e));
-      });
-  }
+app.get('/portfolio/send-all', 
+  (req, res) => {
+    console.log('portfoliosend', req.session.user);
+    if (!req.session.user) {
+      res.send([]);
+    } else {
+      db.getPortfolio(req.session.user)
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((e) => {
+          throw new Error(res.json(e));
+        });
+    }
+  });
 
-});
+app.post('/stock/buy', 
+  (req, res) => {
+    if (!req.session.user) {
+      res.send([]);
+    } else {
 
-app.post('/stock/buy', (req, res) => {
+      const { stock } = req.body;
+      const { symbol, series, refresh, quantity } = stock;
 
-  if (!loggedInUser) {
-    res.send();
-  } else {
-    const { stock } = req.body;
-    const { symbol, series, refresh, quantity } = stock;
+      let obj = {
+        symbol: symbol,
+        close: series[refresh]['4. close'],
+        refresh: refresh,
+        volume: quantity,
+        trader: req.session.user
+      };
 
-    let obj = {
-      symbol: symbol,
-      close: series[refresh]['4. close'],
-      refresh: refresh,
-      volume: quantity,
-      trader: loggedInUser
-    };
-
-    db.saveStock(obj)
-      .then((data) => {
-        res.send();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-});
+      db.saveStock(obj)
+        .then((data) => {
+          res.send();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  });
 
 
-app.post('/stock/sell', (req, res) => {
+app.post('/stock/sell', 
+  (req, res) => {
+    if (!req.session.user) {
+      res.send([]);
+    } else {
+      const { stock } = req.body;
+      const { symbol, refresh, quantity, close } = stock;
 
-  if (!loggedInUser) {
-    res.send([]);
-  } else {
-    const { stock } = req.body;
-    const { symbol, refresh, quantity, close } = stock;
-
-    let obj = {
-      symbol: symbol,
-      close: close,
-      refresh: refresh,
-      volume: quantity,
-      trader: loggedInUser
-    };
-    
-    db.sellStock(obj)
-      .then((data) => {
-        res.send();
-      })
-      .catch((e) => {
-        throw new Error(res.json(e));
-      });
-  }
-});
+      let obj = {
+        symbol: symbol,
+        close: close,
+        refresh: refresh,
+        volume: quantity,
+        trader: req.session.user
+      };
+      
+      db.sellStock(obj)
+        .then((data) => {
+          res.send();
+        })
+        .catch((e) => {
+          throw new Error(res.json(e));
+        });
+    }
+  });
 
 
 
