@@ -138,7 +138,6 @@ app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
 
 app.get('/portfolio/send-all', 
   (req, res) => {
-    console.log('portfoliosend', req.session.user);
     if (!req.session.user) {
       res.send([]);
     } else {
