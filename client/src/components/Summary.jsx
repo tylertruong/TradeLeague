@@ -29,7 +29,7 @@ class Summary extends Component {
   }
 
   logInClick() {
-    location.href = '/login/facebook';
+    location.href = '/login/google';
     // const request = axios.get('/login/facebook');
 
     // request
