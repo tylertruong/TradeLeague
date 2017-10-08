@@ -123,7 +123,7 @@ app.get('/login/google',
 app.get('/login/google/return', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    loggedInUser = req.user.displayName;
+    loggedInUser = req.user.id;
     res.redirect('/');
   }
 );
