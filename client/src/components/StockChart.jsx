@@ -1,5 +1,5 @@
 import React from 'react';
-import {VictoryChart, VictoryLine, VictoryTheme} from 'victory';
+import { VictoryChart, VictoryLine, VictoryTheme } from 'victory';
 
 
 class StockChart extends React.Component {

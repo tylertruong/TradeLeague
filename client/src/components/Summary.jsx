@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Button, Menu, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+
 
 class Summary extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.logInClick = this.logInClick.bind(this);
+  }
 
   findTotalGain() {
     let totalGain = 0;
@@ -19,6 +27,15 @@ class Summary extends Component {
     }
     return totalCost.toFixed(2);
   }
+
+  logInClick() {
+    location.href = '/login/facebook';
+    // const request = axios.get('/login/facebook');
+
+    // request
+    //   .then(this.props.getPortfolio);
+  }
+
 
   render () {
     return (
@@ -41,7 +58,7 @@ class Summary extends Component {
             <Input className='icon' icon='search' placeholder='Search...' />
           </Menu.Item>
           <Menu.Item>
-            <Button>Sign Up</Button>
+            <Button onClick={this.logInClick}>Log In</Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

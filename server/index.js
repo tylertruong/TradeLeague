@@ -5,26 +5,54 @@ const db = require('../db/index');
 const mysql = require('mysql');
 const fetcher = require('../helper/apiFetcher.js');
 const request = require('request');
+const passport = require('passport');
+const Strategy = require('passport-facebook').Strategy;
+ 
+passport.use(new Strategy({
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: 'http://localhost:3000/login/facebook/return'
+},
+(accessToken, refreshToken, profile, cb) => {
+  return cb(null, profile);
+}));
 
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+
+passport.deserializeUser((obj, cb) => {
+  cb(null, obj);
+});
 
 let app = express();
 
+app.use(express.static(path.join(__dirname, '../client/dist/')));
+
+app.use(require('morgan')('combined'));
+app.use(require('cookie-parser')());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const dummyStocks = [
   {name: 'Ford Motor', ticker: 'F'},
   {name: 'General Electric', ticker: 'GE'},
   {name: 'Delta Air Lines', ticker: 'DAL'},
-  {name: 'Snap', ticker: 'SNAP'},
-  {name: 'Bank of America', ticker: 'BAC'},
-  {name: 'AT&T', ticker: 'T'},
-  {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-Cola', ticker: 'KO'},
-  {name: 'Nike', ticker: 'NKE'},
-  {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Snap', ticker: 'SNAP'},
+  // {name: 'Bank of America', ticker: 'BAC'},
+  // {name: 'AT&T', ticker: 'T'},
+  // {name: 'Twitter', ticker: 'TWTR'},
+  // {name: 'Pfizer', ticker: 'PFE'},
+  // {name: 'Coca-Cola', ticker: 'KO'},
+  // {name: 'Nike', ticker: 'NKE'},
+  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
   // {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
@@ -44,10 +72,6 @@ let secondHalf = [];
 let count = 0;
 let mid = Math.floor(dummyStocks.length / 2);
 
-app.use(express.static(path.join(__dirname, '../client/dist/')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
 const cronJob = (stocks) => {
   if (count % 2 === 0) {
     var dummyStock = dummyStocks.slice(0, mid);
@@ -63,7 +87,7 @@ const cronJob = (stocks) => {
   Promise.all(dStocks)
     .then((data) => {
       let stocks = data.map(stock => {
-        const {data, name} = stock;
+        const { data, name } = stock;
         const metadata = data['Meta Data'];
 
         if (!metadata) {
@@ -92,6 +116,17 @@ const cronJob = (stocks) => {
 cronJob(dummyStocks);
 setInterval(() => cronJob(dummyStocks), 65000);
 
+app.get('/login/facebook',
+  passport.authenticate('facebook'));
+
+
+app.get('/login/facebook/return', 
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
 app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
   currentStocks = firstHalf.concat(secondHalf);
   res.status(200).send(currentStocks);
@@ -111,8 +146,8 @@ app.get('/portfolio/send-all', (req, res) => {
 
 app.post('/stock/buy', (req, res) => {
   console.log('buying!');
-  const {stock} = req.body;
-  const {symbol, series, refresh, quantity} = stock;
+  const { stock } = req.body;
+  const { symbol, series, refresh, quantity } = stock;
 
   let obj = {
     symbol: symbol,
@@ -134,8 +169,8 @@ app.post('/stock/buy', (req, res) => {
 
 
 app.post('/stock/sell', (req, res) => {
-  const {stock} = req.body;
-  const {symbol, refresh, quantity, close} = stock;
+  const { stock } = req.body;
+  const { symbol, refresh, quantity, close } = stock;
 
   let obj = {
     symbol: symbol,
@@ -156,6 +191,6 @@ app.post('/stock/sell', (req, res) => {
 
 
 
-const PORT = process.env.PORT || 1128;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => { console.log('Listening on port ' + PORT); } );
