@@ -21,35 +21,52 @@
 
 ## Usage
 
-> Some usage instructions
+> To view graph of stock in full detail, click on title of stock. To purcahse stock, select quantity and press "BUY" underneath the stock infomration. To sell stock, go to the Portofolio section, select quantity and press "SELL". Summary infomration about the application can be found at the navigation bar at the top.
+
 
 ## Requirements
 
-- Body Parser 1.17.0
-- Express 4.15.0
-- Jquery 3.1.1
-- React 15.4.2
-- React DOM 15.4.2
-- React Redux 5.0.6
-- Redux 3.7.2
-- Request 2.81.0
-- Semantic UI React 0.74.2
+- axios 0.16.2
+- babel-core 6.23.1
+- babel-loader 6.3.2
+- babel-preset-es2015 6.22.0
+- babel-preset-react 6.23.0
+- body-parser 1.17.0
+- express 4.15.0
+- mysql 2.13.0
+- package.json 2.0.1
+- react 15.4.2
+- react-dom 15.4.2
+- react-redux 5.0.6
+- redux 3.7.2
+- redux-promise 0.5.3
+- request 2.81.0
+- semantic-ui-react 0.74.2
+- victory 0.23.0
+- webpack 2.2.1
 
 ## Development
+
+- eslint 4.8.0
+- eslint-config-airbnb 15.1.0
+- eslint-plugin-import 2.7.0
+- eslint-plugin-jsx-a11y 5.1.1
+- eslint-plugin-react 7.4.0
+- redux-devtools 3.4.0
 
 ### Installing Dependencies
 
 From within the root directory:
 
 ```sh
-npm install -g bower
 npm install
-bower install
+node server/index.js
+webpack
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](./projectRoadMap.jpg)
 
 
 ## Contributing

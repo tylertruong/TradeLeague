@@ -1,5 +1,5 @@
 import React from 'react';
-import {VictoryChart, VictoryZoomContainer, VictoryLine, VictoryAxis, VictoryBrushContainer} from 'victory';
+import {VictoryChart, VictoryLine, VictoryTheme} from 'victory';
 
 
 class StockChart extends React.Component {
@@ -14,7 +14,7 @@ class StockChart extends React.Component {
     let stockKeys = Object.keys(this.props.stock.series).reverse();
     return (
       <div>
-        <VictoryChart width={1000} height={500} scale={{x: 'time'}} style={chartStyle}
+        <VictoryChart width={1000} height={500} scale={{x: 'time'}} theme={VictoryTheme.material} style={chartStyle}
         >
           <VictoryLine
             style={{
@@ -23,7 +23,7 @@ class StockChart extends React.Component {
 
             data={    
               stockKeys.map(key => {
-                return {x: new Date(key), y: this.props.stock.series[key]['4. close'] };
+                return {x: new Date(key), y: Number(this.props.stock.series[key]['4. close']) };
               })
             }
           />
