@@ -126,7 +126,8 @@ app.get('/login/google',
 app.get('/login/google/return', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    req.session.user = req.user.id;
+    console.log(req.user);
+    req.session.user = req.user.displayName;
     res.redirect('/');
   }
 );

@@ -1,12 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, Accordion, Icon } from 'semantic-ui-react';
 
 class Profile extends Component {
 
   constructor(props) {
     super(props);
+    this.state = { activeIndex: 0 };
+  }
 
+  handleClick(e, titleProps) {
+    const { index } = titleProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
+  }
+
+  makeStocks(stock, index) {
+    return (
+      <div>
+        <Accordion.Title active={activeIndex === index} index={index} onClick={this.handleClick}>
+          <Icon name='dropdown' />
+          {stock.symbol}
+        </Accordion.Title>
+        <Accordion.Content active={activeIndex === index}>
+          <p>
+           Net Gain: {this.props.net_gain} <br />
+           Number of Shares: {this.props.number_of_shares} <br />
+           Position Exposure: {this.props.total_cost} <br />
+           Last Trade Time: {this.props.time_of_last_event} <br />
+          </p>
+        </Accordion.Content>
+      </div>
+    );
   }
 
   render() {
@@ -20,8 +47,11 @@ class Profile extends Component {
           <Image wrapped size='medium' src='/assets/images/avatar/large/rachel.png' />
           <Modal.Description>
             <Header>Profile Statistics</Header>
-            <p>{this.props.totalCost}</p>
-            <p>{this.props.totalGain}</p>
+            <p>Total Cost: {this.props.totalCost}</p>
+            <p>Total Gain: {this.props.totalGain}</p>
+            <Accordion fluid styled>
+              {this.props.portfolio.map((stock, index) => makeStocks(stock, index))}
+            </Accordion>
           </Modal.Description>
         </Modal.Content>
       </Modal>
