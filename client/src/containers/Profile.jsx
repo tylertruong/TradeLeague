@@ -19,10 +19,10 @@ class Profile extends Component {
 
   makeStocks(stock, index) {
     const { activeIndex } = this.state;
-    
+
     return (
       <div>
-        <Accordion.Title active={activeIndex === index} index={index} onClick={this.handleClick}>
+        <Accordion.Title active={activeIndex === index} index={index} onClick={this.handleClick.bind(this)}>
           <Icon name='dropdown' />
           {stock.symbol}
         </Accordion.Title>
