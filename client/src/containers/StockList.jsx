@@ -58,7 +58,7 @@ class StockList extends Component {
 
     return (
       <div className='stock-list'>
-        <h3 className='h3'>Portfolio</h3>
+        <h3>Portfolio</h3>
         <Grid centered>
           {this.props.portfolio.map(stock => {
             if (stock.number_of_shares === 0) {

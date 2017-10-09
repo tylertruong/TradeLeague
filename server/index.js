@@ -52,10 +52,10 @@ const dummyStocks = [
   {name: 'Nike', ticker: 'NKE'},
   {name: 'Wal-Mart Stores', ticker: 'WMT'},
   {name: 'Morgan Stanley', ticker: 'MS'},
-  // {name: 'Exxon Mobil', ticker: 'XOM'},
-  // {name: 'Apple', ticker: 'AAPL'},
-  // {name: 'Alphabet', ticker: 'GOOG'},
-  // {name: 'Microsoft', ticker: 'MSFT'},
+  {name: 'Exxon Mobil', ticker: 'XOM'},
+  {name: 'Apple', ticker: 'AAPL'},
+  {name: 'Alphabet', ticker: 'GOOG'},
+  {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
   // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
   // {name: 'Johnson & Johnson', ticker: 'JNJ'},
@@ -64,24 +64,25 @@ const dummyStocks = [
   // {name: 'Walt Disney', ticker: 'DIS'},
   // {name: 'McDonalds', ticker: 'MCD'},
   // {name: '3M', ticker: 'MMM'},
-//  {name: 'Comcast', ticker: 'CCV'}
 ];
 
-let currentStocks = [];
 let firstHalf = [];
 let secondHalf = [];
 let count = 0;
-let mid = Math.floor(dummyStocks.length / 2);
 
 const cronJob = (stocks) => {
+
+  let dummyStocks = [];
+  let mid = Math.floor(stocks.length / 2);
+
   if (count % 2 === 0) {
-    var dummyStock = dummyStocks.slice(0, mid);
+    dummyStocks = stocks.slice(0, mid);
   } else {
-    var dummyStock = dummyStocks.slice(mid);
+    dummyStocks = stocks.slice(mid);
   }
-  let dStocks = dummyStock.map(stock => {
+  let dStocks = dummyStocks.map(stock => {
     return fetcher.fetchAll(stock.ticker).then(data => { 
-      return {data: data.data, name: stock.name};
+      return { data: data.data, name: stock.name };
     });
   });
 
@@ -130,8 +131,8 @@ app.get('/login/google/return',
   }
 );
 
-app.get('/stock/send-all', (req, res) => { //TODO put in res.end/redirect
-  currentStocks = firstHalf.concat(secondHalf);
+app.get('/stock/send-all', (req, res) => {
+  let currentStocks = firstHalf.concat(secondHalf);
   res.status(200).send(currentStocks);
 });
 
@@ -156,11 +157,10 @@ app.post('/stock/buy',
     if (!req.session.user) {
       res.send([]);
     } else {
-
       const { stock } = req.body;
       const { symbol, series, refresh, quantity } = stock;
 
-      let obj = {
+      const obj = {
         symbol: symbol,
         close: series[refresh]['4. close'],
         refresh: refresh,
@@ -187,7 +187,7 @@ app.post('/stock/sell',
       const { stock } = req.body;
       const { symbol, refresh, quantity, close } = stock;
 
-      let obj = {
+      const obj = {
         symbol: symbol,
         close: close,
         refresh: refresh,
@@ -204,7 +204,6 @@ app.post('/stock/sell',
         });
     }
   });
-
 
 
 const PORT = process.env.PORT || 3000;

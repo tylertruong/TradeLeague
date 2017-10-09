@@ -30,14 +30,10 @@ class Summary extends Component {
 
   logInClick() {
     location.href = '/login/google';
-    // const request = axios.get('/login/facebook');
-
-    // request
-    //   .then(this.props.getPortfolio);
   }
 
 
-  render () {
+  render() {
     return (
       <Menu size='small'>
         <Menu.Item name='Trade League' />

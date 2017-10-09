@@ -3,12 +3,7 @@ import { VictoryChart, VictoryLine, VictoryTheme } from 'victory';
 
 
 class StockChart extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
+  
   render() {
     const chartStyle = { parent: {minWidth: '100%'}};
     let stockKeys = Object.keys(this.props.stock.series).reverse();

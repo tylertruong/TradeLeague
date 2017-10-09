@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import {Grid, Segment, Header, Icon} from 'semantic-ui-react';
+import { Grid, Segment, Header, Icon } from 'semantic-ui-react';
 import StockChart from './StockChart.jsx';
-import {Input, Button} from 'semantic-ui-react';
+import { Input, Button } from 'semantic-ui-react';
 
 class StockListEntry extends Component {
   constructor(props) {
     super(props);
-    this.state = { quantity: 0};
+    this.state = { quantity: 0 };
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
   
   onInputChange(event) {
-    this.setState({quantity: event.target.value});
+    this.setState({ quantity: event.target.value });
   }
 
   onFormSubmit(event) {
