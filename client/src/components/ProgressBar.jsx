@@ -8,10 +8,11 @@ class ProgressBar extends Component {
     this.state = {
       percent: 0
     };
-    setInterval(this.increment, 3000);
+    setInterval(this.increment, 1500);
   }
   
   increment() {
+    console.log('incrementing', this.state.percent);
     this.setState({
       percent: this.state.percent + 1
     });
