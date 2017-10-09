@@ -16,9 +16,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+      active: false
     };
-    setTimeout(this.handleClose.bind(this), 150000);
+    setTimeout(this.handleOpen.bind(this), 150000);
   }
 
   handleOpen() {
