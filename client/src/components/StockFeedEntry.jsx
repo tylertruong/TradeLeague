@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Segment, Header, Icon } from 'semantic-ui-react';
+import { Grid, Segment, Icon } from 'semantic-ui-react';
 import StockChart from './StockChart.jsx';
 import { Input, Button } from 'semantic-ui-react';
 
