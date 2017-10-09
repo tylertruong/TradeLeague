@@ -38,7 +38,9 @@ class Summary extends Component {
     return (
       <Menu size='small'>
         <Menu.Item name='Trade League' />
-        <Profile totalCost={this.findTotalCost()} totalGain={this.findTotalGain()} />
+        <Menu.Item>
+          <Profile totalCost={this.findTotalCost()} totalGain={this.findTotalGain()} />
+        </Menu.Item>
         <Menu.Item name={`Total Gain ${this.findTotalGain()}`} />
         <Menu.Item name={`Total Cost ${this.findTotalCost()}`} />
         {this.props.portfolio.map(stock => {
