@@ -13,7 +13,20 @@ import Summary from './components/Summary.jsx';
 import ProgressBar from './components/ProgressBar.jsx';
 
 class App extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: true
+    };
+    setTimeout(this.handleClose.bind(this), 150000);
+  }
+
+  handleOpen() {
+    this.setState({ active: true });
+  }
+  handleClose() {
+    this.setState({ active: false });
+  } 
   render () {
     return (
       <div>
@@ -23,6 +36,18 @@ class App extends Component {
         <StockList />
         <Divider />
         <StockFeed />
+
+        <Dimmer
+          active={active}
+          onClickOutside={this.handleClose.bind(this)}
+          page
+        >
+          <Header as='h2' icon inverted>
+            <Icon name='heart' />
+            Dimmed Message!
+            <Header.Subheader>Dimmer sub-header</Header.Subheader>
+          </Header>
+        </Dimmer>
       </div>
     );
   }

@@ -2,6 +2,14 @@ div.header {
   width: 100%;
 }
 
+.green-stock {
+  background-color: #caebca;
+}
+
+.red-stock {
+  background-color: #ff9999;
+}
+
 .text {
   margin-left:70px;
 }
@@ -12,6 +20,10 @@ div.header {
 
 h3 {
   margin-left: 40px;
+}
+
+h3.time {
+  margin-left: 20px;
 }
 
 .progress-bar {

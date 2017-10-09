@@ -21,7 +21,7 @@ class Profile extends Component {
     const { activeIndex } = this.state;
 
     return (
-      <div>
+      <div className={ this.props.portfolio[index].net_gain >= 0 ? 'green-stock' : 'red-stock' }>
         <Accordion.Title active={activeIndex === index} index={index} onClick={this.handleClick.bind(this)}>
           <Icon name='dropdown' />
           {stock.symbol}

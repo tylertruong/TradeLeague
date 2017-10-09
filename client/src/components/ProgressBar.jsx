@@ -20,7 +20,7 @@ class ProgressBar extends Component {
   render() {
     return (
       <div className="progress-bar">
-        <h3>Time Left</h3>
+        <h3 className="time">Time Left</h3>
         <Progress percent={this.state.percent} indicating />
       </div>
     );
