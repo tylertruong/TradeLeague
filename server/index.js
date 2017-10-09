@@ -72,6 +72,19 @@ let count = 0;
 
 const cronJob = (stocks) => {
 
+  let dummyStocks = [];
+  let mid = Math.floor(stocks.length / 2);
+
+  if (count % 2 === 0) {
+    dummyStocks = stocks.slice(0, mid);
+  } else {
+    dummyStocks = stocks.slice(mid);
+  }
+  let dStocks = dummyStocks.map(stock => {
+    return fetcher.fetchAll(stock.ticker).then(data => { 
+      return { data: data.data, name: stock.name };
+    });
+  });
 
   Promise.all(dStocks)
     .then((data) => {
@@ -113,7 +126,6 @@ app.get('/login/google',
 app.get('/login/google/return', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    console.log(req.user);
     req.session.user = req.user.displayName;
     res.redirect('/');
   }
