@@ -46,15 +46,15 @@ const dummyStocks = [
   {name: 'Snap', ticker: 'SNAP'},
   {name: 'Bank of America', ticker: 'BAC'},
   {name: 'AT&T', ticker: 'T'},
-  {name: 'Twitter', ticker: 'TWTR'},
-  {name: 'Pfizer', ticker: 'PFE'},
-  {name: 'Coca-Cola', ticker: 'KO'},
-  {name: 'Nike', ticker: 'NKE'},
-  {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  {name: 'Morgan Stanley', ticker: 'MS'},
-  {name: 'Exxon Mobil', ticker: 'XOM'},
-  {name: 'Apple', ticker: 'AAPL'},
-  {name: 'Alphabet', ticker: 'GOOG'},
+  // {name: 'Twitter', ticker: 'TWTR'},
+  // {name: 'Pfizer', ticker: 'PFE'},
+  // {name: 'Coca-Cola', ticker: 'KO'},
+  // {name: 'Nike', ticker: 'NKE'},
+  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  // {name: 'Morgan Stanley', ticker: 'MS'},
+  // {name: 'Exxon Mobil', ticker: 'XOM'},
+  // {name: 'Apple', ticker: 'AAPL'},
+  // {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
   // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
@@ -72,20 +72,6 @@ let count = 0;
 
 const cronJob = (stocks) => {
 
-  let dummyStocks = [];
-  let mid = Math.floor(stocks.length / 2);
-
-  if (count % 2 === 0) {
-    dummyStocks = stocks.slice(0, mid);
-  } else {
-    dummyStocks = stocks.slice(mid);
-  }
-  let dStocks = dummyStocks.map(stock => {
-    return fetcher.fetchAll(stock.ticker).then(data => { 
-      return { data: data.data, name: stock.name };
-    });
-  });
-
   Promise.all(dStocks)
     .then((data) => {
       let stocks = data.map(stock => {
@@ -102,12 +88,6 @@ const cronJob = (stocks) => {
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
-      if (count % 2 === 0) {
-        firstHalf = stocks;
-      } else {
-        secondHalf = stocks;
-      }
-      count++;
     })
     .catch((err) => {
       console.log(err);
@@ -116,7 +96,7 @@ const cronJob = (stocks) => {
 };
 
 cronJob(dummyStocks);
-setInterval(() => cronJob(dummyStocks), 65000);
+setInterval(() => cronJob(dummyStocks), 15000);
 
 
 app.get('/login/google',
