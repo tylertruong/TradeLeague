@@ -6,20 +6,21 @@ class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      percent: 0
+      percent: 100
     };
-    setInterval(this.increment.bind(this), 1500);
+    setInterval(this.decrement.bind(this), 1500);
   }
   
-  increment() {
+  decrement() {
     this.setState({
-      percent: this.state.percent + 1
+      percent: this.state.percent - 1
     });
   }
 
   render() {
     return (
-      <div>
+      <div className="progress-bar">
+        <h3>Time Left</h3>
         <Progress percent={this.state.percent} indicating />
       </div>
     );
