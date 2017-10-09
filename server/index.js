@@ -114,7 +114,6 @@ app.get('/login/google/return',
 );
 
 app.get('/stock/send-all', (req, res) => {
-  let currentStocks = firstHalf.concat(secondHalf);
   res.status(200).send(currentStocks);
 });
 
