@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { VictoryChart, VictoryLine, VictoryTheme } from 'victory';
 
 
-class StockChart extends React.Component {
+class StockChart extends Component {
   
   render() {
     const chartStyle = { parent: {minWidth: '100%'}};

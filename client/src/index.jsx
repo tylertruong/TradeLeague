@@ -10,6 +10,7 @@ import StockList from './containers/StockList.jsx';
 import StockFeed from './containers/StockFeed.jsx';
 import Chart from './containers/Chart.jsx';
 import Summary from './components/Summary.jsx';
+import ProgressBar from './components/ProgressBar.jsx';
 
 class App extends Component {
   
@@ -18,6 +19,7 @@ class App extends Component {
       <div>
         <Summary />
         <Chart /> 
+        <ProgressBar />
         <StockList />
         <Divider />
         <StockFeed />
