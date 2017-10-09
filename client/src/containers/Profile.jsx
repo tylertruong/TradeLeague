@@ -43,7 +43,7 @@ class Profile extends Component {
       return <div></div>;
     }
     return (
-      <Modal trigger={<Button>Profile</Button>}>
+      <Modal trigger={<div><Icon name='user circle' /> Profile</div>} >
         <Modal.Header>{this.props.portfolio[0].trader}</Modal.Header>
         <Modal.Content image>
           <Image wrapped size='medium' src='/assets/images/avatar/large/rachel.png' />
