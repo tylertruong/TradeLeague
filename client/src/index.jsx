@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
 import reducers from './reducers';
 
-import { Divider } from 'semantic-ui-react';
+import { Divider, Dimmer, Header, Icon } from 'semantic-ui-react';
 import StockList from './containers/StockList.jsx';
 import StockFeed from './containers/StockFeed.jsx';
 import Chart from './containers/Chart.jsx';
@@ -44,8 +44,8 @@ class App extends Component {
         >
           <Header as='h2' icon inverted>
             <Icon name='heart' />
-            Dimmed Message!
-            <Header.Subheader>Dimmer sub-header</Header.Subheader>
+            Times Up!
+            <Header.Subheader>Markets Closed.</Header.Subheader>
           </Header>
         </Dimmer>
       </div>
