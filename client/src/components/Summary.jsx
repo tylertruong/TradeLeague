@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Menu, Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Profile from '../containers/Profile.jsx';
 
 
 class Summary extends Component {
@@ -37,7 +38,7 @@ class Summary extends Component {
     return (
       <Menu size='small'>
         <Menu.Item name='Trade League' />
-
+        <Profile totalCost={this.findTotalCost()} totalGain={this.findTotalGain()} />
         <Menu.Item name={`Total Gain ${this.findTotalGain()}`} />
         <Menu.Item name={`Total Cost ${this.findTotalCost()}`} />
         {this.props.portfolio.map(stock => {
