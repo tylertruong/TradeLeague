@@ -30,7 +30,7 @@ class StockListEntry extends Component {
     return (
       <Grid.Column mobile={12} tablet={6} computer={5}>
         <Segment >
-          <Header as='h4' onClick={() => this.props.onTitleClick(this.props.stock)} >{this.props.stock.name}</Header> 
+          <h4 onClick={() => this.props.onTitleClick(this.props.stock)} >{this.props.stock.name}</h4> 
           Symbol: {this.props.stock.symbol} <br></br>
           Net Gain: {this.props.stock.net_gain} <br></br>
           Number of Shares: {this.props.stock.number_of_shares} <br></br>
