@@ -18,6 +18,8 @@ class Profile extends Component {
   }
 
   makeStocks(stock, index) {
+    const { activeIndex } = this.state;
+    
     return (
       <div>
         <Accordion.Title active={activeIndex === index} index={index} onClick={this.handleClick}>
