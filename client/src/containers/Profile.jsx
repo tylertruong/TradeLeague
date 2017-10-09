@@ -28,10 +28,10 @@ class Profile extends Component {
         </Accordion.Title>
         <Accordion.Content active={activeIndex === index}>
           <p>
-           Net Gain: {this.props.net_gain} <br />
-           Number of Shares: {this.props.number_of_shares} <br />
-           Position Exposure: {this.props.total_cost} <br />
-           Last Trade Time: {this.props.time_of_last_event} <br />
+           Net Gain: {this.props.portfolio.net_gain} <br />
+           Number of Shares: {this.props.portfolio.number_of_shares} <br />
+           Position Exposure: {this.props.portfolio.total_cost} <br />
+           Last Trade Time: {this.props.portfolio.time_of_last_event} <br />
           </p>
         </Accordion.Content>
       </div>
