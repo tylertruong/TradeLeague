@@ -10,6 +10,9 @@ class Profile extends Component {
   }
 
   render() {
+    if (this.props.portfolio.length === 0) {
+      return <div></div>;
+    }
     return (
       <Modal trigger={<Button>Profile</Button>}>
         <Modal.Header>{this.props.portfolio[0].trader}</Modal.Header>
