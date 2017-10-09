@@ -9,7 +9,6 @@ import { Divider } from 'semantic-ui-react';
 import StockList from './containers/StockList.jsx';
 import StockFeed from './containers/StockFeed.jsx';
 import Chart from './containers/Chart.jsx';
-import SearchBar from './components/SearchBar.jsx';
 import Summary from './components/Summary.jsx';
 
 class App extends Component {
