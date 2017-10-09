@@ -72,7 +72,7 @@ let currentStocks = [];
 
 const cronJob = (stocks) => {
 
-  Promise.all(dStocks)
+  Promise.all(stocks)
     .then((data) => {
       let stocks = data.map(stock => {
         const { data, name } = stock;
