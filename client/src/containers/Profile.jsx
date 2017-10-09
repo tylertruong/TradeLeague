@@ -50,7 +50,7 @@ class Profile extends Component {
             <p>Total Cost: {this.props.totalCost}</p>
             <p>Total Gain: {this.props.totalGain}</p>
             <Accordion fluid styled>
-              {this.props.portfolio.map((stock, index) => makeStocks(stock, index))}
+              {this.props.portfolio.map((stock, index) => this.makeStocks(stock, index))}
             </Accordion>
           </Modal.Description>
         </Modal.Content>
