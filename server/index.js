@@ -46,15 +46,15 @@ const dummyStocks = [
   {name: 'Snap', ticker: 'SNAP'},
   {name: 'Bank of America', ticker: 'BAC'},
   {name: 'AT&T', ticker: 'T'},
-  // {name: 'Twitter', ticker: 'TWTR'},
-  // {name: 'Pfizer', ticker: 'PFE'},
-  // {name: 'Coca-Cola', ticker: 'KO'},
-  // {name: 'Nike', ticker: 'NKE'},
-  // {name: 'Wal-Mart Stores', ticker: 'WMT'},
-  // {name: 'Morgan Stanley', ticker: 'MS'},
-  // {name: 'Exxon Mobil', ticker: 'XOM'},
-  // {name: 'Apple', ticker: 'AAPL'},
-  // {name: 'Alphabet', ticker: 'GOOG'},
+  {name: 'Twitter', ticker: 'TWTR'},
+  {name: 'Pfizer', ticker: 'PFE'},
+  {name: 'Coca-Cola', ticker: 'KO'},
+  {name: 'Nike', ticker: 'NKE'},
+  {name: 'Wal-Mart Stores', ticker: 'WMT'},
+  {name: 'Morgan Stanley', ticker: 'MS'},
+  {name: 'Exxon Mobil', ticker: 'XOM'},
+  {name: 'Apple', ticker: 'AAPL'},
+  {name: 'Alphabet', ticker: 'GOOG'},
   // {name: 'Microsoft', ticker: 'MSFT'},
   // {name: 'Amazon', ticker: 'AMZN'},
   // {name: 'Berkshire Hathaway', ticker: 'BRK-B'},
@@ -66,9 +66,9 @@ const dummyStocks = [
   // {name: '3M', ticker: 'MMM'},
 ];
 
-let firstHalf = [];
-let secondHalf = [];
-let count = 0;
+
+let currentStocks = [];
+
 
 const cronJob = (stocks) => {
 
@@ -88,6 +88,7 @@ const cronJob = (stocks) => {
 
         return {symbol: symbol, series: timeSeries, name: name, refresh: refresh};
       }); 
+      currentStocks = stocks;
     })
     .catch((err) => {
       console.log(err);
