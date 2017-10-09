@@ -38,7 +38,7 @@ class App extends Component {
         <StockFeed />
 
         <Dimmer
-          active={active}
+          active={this.state.active}
           onClickOutside={this.handleClose.bind(this)}
           page
         >
