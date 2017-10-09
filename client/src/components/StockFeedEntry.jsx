@@ -40,7 +40,7 @@ class StockFeedEntry extends Component {
           <StockChart stock={this.props.stock} /><br></br>
           <div >
             <form onSubmit={this.onFormSubmit}>
-              <Input type="number" value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Buy</Button>
+              <Input type="number" min="0" max="500" value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Buy</Button>
             </form>
           </div>
         </Segment>

@@ -39,7 +39,7 @@ class StockListEntry extends Component {
           <StockChart stock={this.props.stock} /><br></br>
           <div>
             <form onSubmit={this.onFormSubmit}>
-              <Input type="number" value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Sell</Button>
+              <Input type="number" min="0" max={this.props.stock.number_of_shares} value={this.state.quantity} onChange={this.onInputChange} /><Button type="submit">Sell</Button>
             </form>
           </div>
         </Segment>
