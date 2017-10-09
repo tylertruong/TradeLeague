@@ -15,7 +15,8 @@ h3 {
 }
 
 h4:hover {
-  color: #e5e5e5 !important;
+  color: #ef6045 !important;
+  cursor: pointer;
 }
 
 .search-bar {
